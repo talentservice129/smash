@@ -1,0 +1,2398 @@
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="button.css" />
+    <style>
+      * {
+        z-index: 1;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        /* background-image: url(bg.png); */
+      }
+
+      @keyframes rotate {
+        0% {
+          border-image: linear-gradient(
+              0deg,
+              #00ffff 50%,
+              #00ffff 20%,
+              #b818e0,
+              #8921f1
+            )
+            30;
+          /*box-shadow: inset 5px 0px 15px 5px #00ffff7d, 
+            inset 0 5px 15px 5px #B818E07d,
+            inset 5px 0px 5px 5px #8921f17d;*/
+        }
+        25% {
+          border-image: linear-gradient(
+              90deg,
+              #00ffff 50%,
+              #00ffff 20%,
+              #b818e0,
+              #8921f1
+            )
+            30;
+          /*box-shadow: inset 5px 0px 15px 5px #00ffff7d, 
+            inset 5px 0px 15px 5px #B818E07d,
+            inset 0px 5px 5px 5px #8921f17d;*/
+        }
+        50% {
+          border-image: linear-gradient(
+              180deg,
+              #00ffff 50%,
+              #00ffff 20%,
+              #b818e0,
+              #8921f1
+            )
+            30;
+          /*box-shadow: inset 5px 0px 15px 5px #00ffff7d, 
+            inset 5px 5px 15px 5px #B818E07d,
+            inset 5px 5px 5px 5px #8921f17d;*/
+        }
+        75% {
+          border-image: linear-gradient(
+              270deg,
+              #00ffff 50%,
+              #00ffff 20%,
+              #b818e0,
+              #8921f1
+            )
+            30;
+          /*box-shadow: inset 5px 0px 15px 5px #00ffff7d, 
+            inset 0 0px 15px 5px #B818E07d,
+            inset 0px 0px 5px 5px #8921f17d;*/
+        }
+        100% {
+          border-image: linear-gradient(
+              0deg,
+              #00ffff 50%,
+              #00ffff 20%,
+              #b818e0,
+              #8921f1
+            )
+            30;
+          /*box-shadow: inset 5px 0px 15px 5px #00ffff7d, 
+            inset 0 5px 15px 5px #B818E07d,
+            inset 5px 0px 5px 5px #8921f17d; */
+        }
+      }
+
+      canvas {
+        margin: 0 auto;
+        display: block;
+        position: relative;
+        /* background-color: rgb(0 0 0 / 83%); */
+        /* border-image: linear-gradient(0deg,#00FFFF 50%,#00FFFF 20%, #B818E0,#9544E6) 30; */
+        box-shadow: inset 0 0 10px 5px #00ffff69, 0 0 10px 5px #00ffff69,
+          inset 0px 0px 10px 5px #b818e069, 0px 0px 10px 5px #b818e069,
+          inset 0px 0px 10px 5px #8921f169, 0px 0px 10px 5px #8921f169;
+        /* box-shadow: inset 5px 0px 15px 5px #00ffff7d, 
+            inset 0 5px 15px 5px #B818E07d,
+            inset 5px 0px 5px 5px #8921f17d; */
+        /* box-shadow: linear-gradient(0deg,#00FFFF 50%,#00FFFF 20%, #B818E0,#8921f1 30); */
+        border-width: 4px;
+        border-style: solid;
+        animation-name: rotate;
+        animation-duration: 4.5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+
+      img {
+        /* background-blend-mode: color-dodge; */
+        /* background-color: #020202ab; */
+      }
+
+      button {
+        /* border-radius: 5px; */
+        font-size: 1.5em;
+        display: block;
+        margin: 10 auto;
+        position: relative;
+        top: 3rem;
+        /* background-color: #8921f1; */
+        /* color: rgb(204, 204, 253); */
+        /* padding: 1rem; */
+        font-size: 2rem;
+        /* border: 0.25em #8921f1 solid; */
+        /* border: none; */
+        border-radius: 0.3em !important;
+      }
+
+      @media screen and (max-width: 710px) {
+        /* Surface Pro 7, Surface Duo */
+        canvas {
+          width: 90% !important;
+          height: auto !important;
+          top: 5vh !important;
+        }
+        .control {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+      @media screen and (max-width: 1800px) {
+        canvas {
+          width: 92% !important;
+          height: 65%;
+          top: 0.5rem;
+        }
+      }
+
+      .control {
+        margin-top: 4rem;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .button-30 {
+        margin-top: -20px;
+      }
+
+      .chal {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        color: aliceblue;
+      }
+      .imgsr {
+        height: 40px;
+        background: transparent;
+      }
+      div button img {
+        height: 25px;
+        /* margin-left: -6px; */
+        margin-left: 6px;
+      }
+      .imgds {
+        border-radius: 50%;
+        width: 50px;
+        margin-bottom: 1.5rem;
+        position: absolute;
+        right: 8px;
+        top: -10px;
+        background: transparent;
+        border: none;
+      }
+      .imgds1 {
+        border-radius: 50%;
+        width: 50px;
+        margin-bottom: 1.5rem;
+        position: absolute;
+        right: 50px;
+        top: -10px;
+        background: transparent;
+        border: none;
+      }
+      .divo {
+        height: 50px;
+        margin-left: -15px;
+        background-color: transparent;
+      }
+
+      .divo1 {
+        height: 27px;
+        padding: 3px;
+        border-radius: 50%;
+        border: 2px solid aliceblue;
+        margin-top: 12px;
+        margin-left: -15px;
+        background-color: transparent;
+      }
+      p {
+        color: #8921f1;
+      }
+      .sound {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 50px;
+        margin-left: 25px;
+        margin-right: 25px;
+      }
+      .sound button img {
+        background-color: transparent;
+      }
+      .buttoncl {
+        background-color: transparent;
+        display: flex;
+        flex-direction: row;
+        width: 175px;
+      }
+      .mt-10 {
+        margin-top: -45px;
+      }
+      .buttoncl p {
+        margin-bottom: 0 !important;
+        margin-left: 25px;
+        color: aliceblue !important;
+      }
+      dialog {
+        background-color: #123048;
+        border: 4px solid #aaf1fe;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 0 10px #aaf1fe;
+        height: 310px !important;
+      }
+
+      .leb {
+        /* margin-left: 25px; */
+      }
+      .main-btns {
+        display: flex;
+      }
+      .menuLink {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <audio id="brickTouchSound" onclick="changeText()">
+      <source src="balls_touches_the_block.wav" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="brickBreakSound">
+      <source src="230927202-stone-drop-soft-surface-6.wav" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="bgMusic" autoplay loop>
+      <source
+        src="Dosi & Aisake - Cruising  Lofi  NCS - Copyright Free Music.mp3"
+        type="audio/mpeg"
+      />
+      Your browser does not support the audio element.
+    </audio>
+
+    <img
+      style="position: absolute; width: 100%; height: 100%; z-index: -1"
+      src="4\4\Untitled-1-09.png"
+    />
+    <img
+      src="Untitled-1-06-min-min.png"
+      alt="Ball"
+      width="20"
+      height="20"
+      id="scream"
+      style="display: none"
+    />
+    <img
+      src="additional_ball.png"
+      alt="Ball"
+      width="20"
+      height="20"
+      id="water"
+      style="display: none"
+    />
+    <div
+      style="
+        background: url('4\4\Untitled-1-09.png');
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      "
+    ></div>
+    <div class="chal">
+      <dialog>
+        <button
+          autofocus
+          class="button-88 button buttoncl mt-10"
+          onclick="dialog.close()"
+        >
+          <img src="play-button-arrowhead.png" alt="close" />
+          <p>Continue</p>
+        </button>
+        <div class="sound">
+          <button
+            class="button-88 button soundBtn buttoncl"
+            role="button"
+            onclick="let soundImage = document.getElementById('soundImage');var audioElementTouch = document.getElementById('brickTouchSound');
+            var audioElementBreak = document.getElementById('brickBreakSound');if (soundImage.src.endsWith('no-sound.png')) {
+            soundImage.src = 'volume.png';
+            audioElementTouch.muted = false;
+            audioElementBreak.muted = false;
+          } else {
+            audioElementTouch.muted = true;
+            audioElementBreak.muted = true;
+            soundImage.src = 'no-sound.png';
+          }"
+          >
+            <img src="volume.png" id="soundImage" alt="sound" />
+            <p>Sound</p>
+          </button>
+          <button
+            class="button-88 button buttoncl leb"
+            role="button"
+            onclick="let musicImage = document.getElementById('musicImage');var bgMusic = document.getElementById('bgMusic');if (musicImage.src.endsWith('no-music.png')) {
+            musicImage.src = 'music.png';
+            bgMusic.play();
+          } else {
+            musicImage.src = 'no-music.png';
+            bgMusic.pause();
+          } "
+          >
+            <!-- onclick="musicImage.src = 'volume.png'" -->
+            <img src="music.png" id="musicImage" alt="music" />
+            <p>Music</p>
+          </button>
+          <button class="button-88 button buttoncl leb" role="button">
+            <img src="burger-bar.png" alt="sound" />
+            <a class='menuLink' href='/menu'>
+              <p>Menu</p>
+            </a>
+          </button>
+        </div>
+        <!-- <p>This modal dialog has a groovy backdrop!</p> -->
+      </dialog>
+      <div class="main-btns">
+        <button class="imgds" role="button" onclick="dialog.showModal();">
+          <img class="divo" src="ShutDown.png" alt="pause" />
+        </button>
+        <button
+          class="imgds1"
+          role="button"
+          onclick="window.location.reload();"
+        >
+          <img class="divo1" src="sync.png" id="refreshBtn" alt="pause" />
+        </button>
+      </div>
+
+      <canvas
+        id="canvas"
+        style="background: url('4\4\Untitled-1-09.png')"
+      ></canvas>
+      <div class="control" style="display: none">
+        <input
+          type="range"
+          title="noopener"
+          min="0"
+          max="1000"
+          value="500"
+          id="myRange"
+          class="range blue slider"
+        />
+        <button
+          class="button-30"
+          role="button"
+          onclick="gameManager.downBalls()"
+        >
+          <img src="down-chevron.png" alt="Drop Down" class="imgsr" />
+        </button>
+      </div>
+    </div>
+    <!-- <button  id="btn">Drop Down</button> -->
+    <script>
+      function randomInt(...args) {
+        if (args.length === 1) {
+          const [n] = args;
+          return Math.ceil(Math.random() * n);
+        }
+
+        if (args.length === 2) {
+          const [start, end] = args;
+
+          if (start > end) throw Error("시작값이 끝값보다 큼");
+
+          return Math.ceil(Math.random() * (end - start)) + start;
+        }
+      }
+
+      function random(...args) {
+        if (args.length === 1) {
+          const [n] = args;
+          return Math.random() * n;
+        }
+
+        if (args.length === 2) {
+          const [start, end] = args;
+
+          if (start > end) throw Error("시작값이 끝값보다 큼");
+
+          return Math.random() * (end - start) + start;
+        }
+      }
+
+      const range = function (n, m) {
+        if (arguments.length === 1)
+          return Array.from({ length: n }).map((_, i) => i);
+
+        if (arguments.length === 2) {
+          if (n === m) return [n];
+          else if (n < m) {
+            return Array.from({ length: m - n + 1 }).map((_, i) => i + n);
+          } else {
+            return Array.from({ length: n - m + 1 }).map(
+              (_, i) => m - i + (n - m)
+            );
+          }
+        }
+      };
+
+      function normalize(n) {
+        return n < 0 ? -1 : n > 0 ? 1 : 0;
+      }
+
+      function clamp(v, min, max) {
+        return Math.max(min, Math.min(max, v));
+      }
+
+      function between(v, min, max) {
+        return min <= v && v <= max;
+      }
+
+      const delay = (n) => new Promise((r) => setTimeout(r, n));
+    </script>
+
+    <script>
+      /**
+       * Vector Library
+       **/
+      class Vector {
+        constructor(x = 0, y = 0) {
+          this.x = x;
+          this.y = y;
+        }
+
+        add(v) {
+          this.x += v.x;
+          this.y += v.y;
+        }
+
+        sub(v) {
+          this.x -= v.x;
+          this.y -= v.y;
+        }
+
+        mult(n) {
+          this.x *= n;
+          this.y *= n;
+        }
+
+        mag() {
+          return Math.sqrt(this.x * this.x + this.y + this.y);
+        }
+
+        get() {
+          return new Vector(this.x, this.y);
+        }
+
+        normalize() {
+          this.x = normalize(this.x);
+          this.y = normalize(this.y);
+        }
+
+        copy() {
+          return new Vector(this.x, this.y);
+        }
+      }
+
+      Vector.mult = (v, n) => new Vector(v.x * n, v.y * n);
+
+      Vector.div = (v, n) => new Vector(v.x / n, v.y / n);
+    </script>
+
+    <script>
+      /**
+       *   Canvas Library
+       **/
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const width = 700;
+      const height = 1080;
+
+      const uiOffsetY = 80;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      function line(x1, y1, x2, y2) {
+        ctx.beginPath();
+        // ctx.strokeStyle = color;
+        ctx.lineWidth = 5;
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+
+        const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+        gradient.addColorStop(0, "#ff00ffcc");
+        gradient.addColorStop(1, "#00ffffcc");
+        ctx.strokeStyle = gradient;
+        ctx.stroke();
+      }
+
+      function line1(x1, y1, x2, y2) {
+        ctx.beginPath();
+        // ctx.strokeStyle = color;
+        ctx.lineWidth = 5;
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+
+        const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+        gradient.addColorStop(0, "#00ffffcc");
+        gradient.addColorStop(1, "#ff00ffcc");
+        ctx.strokeStyle = gradient;
+        ctx.stroke();
+      }
+
+      function dashLine(x1, y1, x2, y2, color = "#ff00ff") {
+        ctx.beginPath();
+        ctx.setLineDash([1, 15]);
+        ctx.strokeStyle = color;
+        ctx.lineCap = "round";
+
+        // Calculate the angle of the line
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+
+        // Calculate the new x2 and y2 coordinates to make the line 800px long
+        const distance = 1000;
+        const newX2 = x1 + distance * Math.cos(angle);
+        const newY2 = y1 + distance * Math.sin(angle);
+
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(newX2, newY2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      function rect(x, y, w, h) {
+        ctx.beginPath();
+        ctx.rect(x, y, w, h);
+        ctx.strokeStyle = "#000";
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      function fillRect(x, y, w, h, color = "#171717") {
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, w, h);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+      }
+
+      function circle(x, y, r, color = "#000") {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.lineWidth = 3;
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+      }
+
+      function clear() {
+        ctx.clearRect(0, 0, width, height);
+      }
+
+      function shuffle(arr) {
+        return arr.sort(() => Math.random() - 0.5);
+      }
+    </script>
+
+    <script>
+      /**
+       *   User Code
+       **/
+      const POWER = 0.3;
+
+      const Mouse = { position: new Vector(0, 0) };
+
+      class BallLine {
+        constructor() {}
+        display(state) {
+          if (!state.ballMoving && !state.brickMoving && state.ballPos) {
+            dashLine(
+              state.ballPos.x,
+              state.ballPos.y,
+              Mouse.position.x,
+              Mouse.position.y,
+              Math.min(Mouse.position.y, 720)
+            );
+          }
+        }
+      }
+
+      class Ball {
+        constructor(mass, x, y) {
+          this.position = new Vector(x, y);
+          this.velocity = new Vector(0, 0);
+          this.acceleration = new Vector(0, 0);
+          this.mass = mass;
+          this.r = this.mass * 10;
+          this.showDirection = true;
+        }
+
+        setOnStop(f) {
+          this.onStop = f;
+        }
+
+        applyForce(force) {
+          const f = Vector.div(force, this.mass);
+          this.acceleration.add(f);
+        }
+
+        update() {
+          this.velocity.add(this.acceleration);
+          this.position.add(this.velocity);
+
+          this.acceleration.mult(0);
+        }
+
+        move(direction) {
+          if (direction === "right") this.applyForce(new Vector(20, 0));
+          else if (direction === "left") this.applyForce(new Vector(-20, 0));
+        }
+
+        stop() {
+          this.velocity = new Vector(0, 0);
+          this.showDirection = true;
+          this.onStop(this);
+          this.downing = false;
+        }
+
+        down() {
+          this.downing = true;
+          this.velocity = new Vector(0, 30);
+        }
+
+        shoot(mousePos) {
+          this.showDirection = false;
+          const constantSpeed = 25;
+          let angle;
+
+          // Check if the mouse position is on the extreme right
+          if (mousePos.x >= width - 0.5) {
+            // Calculate the angle to shoot the ball towards the right side
+            angle = Math.PI / 2; // 90 degrees in radians
+          } else {
+            // Calculate the angle based on the mouse position
+            const opposite = mousePos.y - this.position.y;
+            const adjacent = mousePos.x - this.position.x;
+            angle = Math.atan2(opposite, adjacent);
+          }
+
+          const force = this.calcBallVelocity(angle, constantSpeed);
+          this.applyForce(force);
+        }
+
+        calcBallVelocity(angle, constantSpeed) {
+          return new Vector(
+            constantSpeed * Math.cos(angle),
+            constantSpeed * Math.sin(angle)
+          );
+        }
+
+        angle(mousePos) {
+          const opposite = mousePos.y - this.position.y;
+          const adjacent = mousePos.x - this.position.x;
+          const angle = Math.atan2(opposite, adjacent);
+
+          return angle;
+        }
+
+        display() {
+          // const canvas = document.getElementById("myCanvas");
+          // const ctx = canvas.getContext("2d");
+          const img = document.getElementById("scream");
+
+          // Define the new width and height for the image
+          const newWidth = 150; // Set your desired width
+          const newHeight = 100; // Set your desired height
+          const marginBottom = -50;
+          const marginLeft = -81;
+
+          const yPosWithMargin = this.position.y + marginBottom;
+          const xPosWithMargin = this.position.x + marginLeft;
+
+          // Check if the image is loaded
+          if (img.complete) {
+            ctx.drawImage(
+              img,
+              xPosWithMargin,
+              yPosWithMargin,
+              newWidth,
+              newHeight
+            );
+          } else {
+            img.onload = function () {
+              ctx.drawImage(
+                img,
+                xPosWithMargin,
+                yPosWithMargin,
+                newWidth,
+                newHeight
+              );
+            };
+          }
+        }
+
+        collideWith(brick) {
+          if (this.downing) return false;
+
+          const { x, y } = this.position;
+          const r = this.r;
+
+          const closestX = clamp(x, brick.x, brick.x + brick.w);
+          const closestY = clamp(y, brick.y, brick.y + brick.h);
+
+          const distanceX = x - closestX;
+          const distanceY = y - closestY;
+          const distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+          const collided = distanceSquared < r * r;
+
+          if (!collided) return false;
+
+          if (
+            closestY === brick.y &&
+            between(closestX, brick.x - r + 5, brick.x + brick.w + r - 5) // Change the +/- 3 to +/- 5
+          ) {
+            this.velocity.y *= -1;
+            this.position.y = closestY - r;
+          } else if (
+            closestY === brick.y + brick.h &&
+            between(closestX, brick.x - r + 5, brick.x + brick.w + r - 5) // Change the +/- 3 to +/- 5
+          ) {
+            this.velocity.y *= -1;
+            this.position.y = closestY + r;
+          } else if (
+            closestX === brick.x &&
+            between(closestY, brick.y - r + 5, brick.y + brick.h + r - 5) // Change the +/- 3 to +/- 5
+          ) {
+            this.velocity.x *= -1;
+            this.position.x = closestX - r;
+          } else if (
+            closestX === brick.x + brick.w &&
+            between(closestY, brick.y - r + 5, brick.y + brick.h + r - 5) // Change the +/- 3 to +/- 5
+          ) {
+            this.velocity.x *= -1;
+            this.position.x = closestX + r;
+          }
+
+          return true;
+        }
+
+        collideWithBonusBall(bonusBall) {
+          if (this.downing) return false;
+
+          const x = this.position.x - bonusBall.x;
+          const y = this.position.y - bonusBall.y;
+          const r = this.r;
+          const collided = 2 * r >= Math.sqrt(x * x + y * y);
+
+          return collided;
+        }
+
+        checkEdges() {
+          if (this.position.x > width) {
+            this.position.x = width;
+            this.velocity.x *= -1;
+          } else if (this.position.x < 0) {
+            this.position.x = 0;
+            this.velocity.x *= -1;
+          }
+
+          if (this.position.y > height - 100) {
+            this.velocity.y *= -1;
+            this.position.y = height - 100;
+            this.stop();
+          } else if (this.position.y < 100) {
+            this.velocity.y *= -1;
+            this.position.y = 100;
+          }
+        }
+      }
+
+      const brickColors = [
+        "#44ffb7",
+        "#29c8f8",
+        "#f8e329",
+        "rgb(250, 183, 38)",
+        "#f85929",
+      ];
+      class Brick {
+        constructor(n, x, y) {
+          this.n = n;
+          this.start = n;
+
+          this.x = x * 100;
+          this.y = y * 100 + uiOffsetY;
+          this.w = 100;
+          this.h = 100;
+        }
+
+        shouldMoveDown(state) {
+          return this.y < 100 * (state.level - this.start + 1) + uiOffsetY;
+        }
+
+        update(state) {
+          if (this.shouldMoveDown(state)) {
+            this.y = Math.min(
+              this.y + 10,
+              100 * (state.level - this.start + 1) + uiOffsetY
+            );
+          }
+        }
+
+        color(level) {
+          const percentage = ((level - this.n) / level) * 30;
+          return `hsl(${percentage}, ${100 - percentage}%, 63%)`;
+        }
+        colorGradient(state) {
+          const gradient = ctx.createRadialGradient(
+            this.x + this.w / 2,
+            this.y + this.h / 2,
+            0,
+            this.x + this.w / 2,
+            this.y + this.h / 2,
+            this.w / 2
+          );
+
+          // Change this line to set the background color to dark green
+          gradient.addColorStop(0, "rgb(250, 183, 38)");
+          return gradient;
+        }
+        drawGoldenGlow(ctx, x, y, w, h) {
+          const centerX = x + w / 2;
+          const centerY = y + h / 2;
+
+          // Create a radial gradient for the glow
+          const gradient = ctx.createRadialGradient(
+            centerX,
+            centerY,
+            0,
+            centerX,
+            centerY,
+            w / 2
+          );
+
+          // Add color stops to simulate the glow
+          // gradient.addColorStop(0, 'rgba(255, 223, 0, 0.4)');
+          // gradient.addColorStop(1, 'rgba(255, 223, 0, 0)');
+
+          // Set the gradient as the fill style
+          ctx.fillStyle = gradient;
+
+          // Fill the rectangle with the gradient
+          ctx.fillRect(x, y, w, h);
+        }
+
+        drawGlowBorder(
+          ctx,
+          x,
+          y,
+          w,
+          h,
+          borderWidth,
+          borderColor,
+          glowColor,
+          glowBlur
+        ) {
+          // Save the current canvas state
+          ctx.save();
+
+          // Draw the rectangular shape (without a border)
+          ctx.fillStyle = glowColor;
+          ctx.fillRect(x, y, w, h);
+
+          // Set the shadow properties for the glow effect
+          ctx.shadowBlur = glowBlur;
+          ctx.shadowColor = borderColor;
+
+          // Draw the border (with a glow effect)
+          ctx.strokeStyle = borderColor;
+          ctx.lineWidth = borderWidth;
+          ctx.strokeRect(x, y, w, h);
+
+          // Restore the canvas state to remove the shadow from other elements
+          ctx.restore();
+        }
+
+        display(state) {
+          const centerX = this.x + this.w / 2;
+          const centerY = this.y + this.h / 2;
+          const spaceInside = 8;
+          const innerWidth = this.w - 2 * spaceInside;
+          const innerHeight = this.h - 2 * spaceInside;
+
+          const innerX = centerX - innerWidth / 2;
+          const innerY = centerY - innerHeight / 2;
+
+          // Set the shadow properties to create the glow effect
+          // ctx.shadowBlur = 1; // Adjust the blur radius for the glow
+
+          // Fill the inner rectangle with the gradient and the glow effect
+          // ctx.fillStyle = this.colorGradient(state.level);
+          // ctx.fillStyle = `rgb(${(255 / 100) * (this.n + 2) * 5}, ${155 - (255 / 100) * (this.n +2) * 5}, ${(255 / 100) * (this.n +2)})`;
+          const min = 1;
+          const max = 49;
+          const randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
+          let s = randomInt;
+
+          let a,
+            b,
+            c,
+            d = 55,
+            e = 55,
+            f = 55,
+            g = 1,
+            h,
+            i,
+            j,
+            k,
+            l,
+            m;
+          let chlvl = this.n % 50;
+          if (chlvl === 1) {
+            a = 255;
+            b = 0;
+            c = 255;
+            h = 255;
+            i = 20;
+            j = 147;
+            k = 255;
+            l = 85;
+            m = 255;
+          } else if (chlvl === 2) {
+            a = 50;
+            b = 205;
+            c = 50;
+            h = 34;
+            i = 139;
+            j = 34;
+            k = 0;
+            l = 128;
+            m = 0;
+          } else if (chlvl === 3) {
+            a = 0;
+            b = 0;
+            c = 255;
+            h = 0;
+            i = 0;
+            j = 220;
+            k = 0;
+            l = 0;
+            m = 185;
+          } else if (chlvl === 4) {
+            a = 0;
+            b = 255;
+            c = 0;
+            h = 0;
+            i = 200;
+            j = 0;
+            k = 0;
+            l = 150;
+            m = 0;
+          } else if (chlvl === 5) {
+            a = 128;
+            b = 0;
+            c = 128;
+            h = 160;
+            i = 32;
+            j = 240;
+            k = 128;
+            l = 0;
+            m = 255;
+          } else if (chlvl === 6) {
+            a = 255;
+            b = 255;
+            c = 0;
+            h = 255;
+            i = 235;
+            j = 0;
+            k = 255;
+            l = 215;
+            m = 0;
+          } else if (chlvl === 7) {
+            a = 255;
+            b = 0;
+            c = 0;
+            h = 255;
+            i = 40;
+            j = 40;
+            k = 255;
+            l = 80;
+            m = 80;
+          } else if (chlvl === 8) {
+            a = 255;
+            b = 0;
+            c = 255;
+            h = 255;
+            i = 20;
+            j = 147;
+            k = 255;
+            l = 85;
+            m = 255;
+          } else if (chlvl === 9) {
+            a = 0;
+            b = 255;
+            c = 255;
+            h = 0;
+            i = 173;
+            j = 239;
+            k = 0;
+            l = 128;
+            m = 255;
+          } else if (chlvl === 10) {
+            a = 255;
+            b = 215;
+            c = 0;
+            h = 255;
+            i = 180;
+            j = 0;
+            k = 255;
+            l = 150;
+            m = 0;
+          } else if (chlvl === 11) {
+            a = 200;
+            b = 162;
+            c = 200;
+            h = 215;
+            i = 175;
+            j = 215;
+            k = 230;
+            l = 188;
+            m = 230;
+          } else if (chlvl === 12) {
+            a = 135;
+            b = 206;
+            c = 250;
+            h = 119;
+            i = 158;
+            j = 203;
+            k = 100;
+            l = 149;
+            m = 237;
+          } else if (chlvl === 13) {
+            a = 50;
+            b = 205;
+            c = 50;
+            h = 0;
+            i = 128;
+            j = 0;
+            k = 124;
+            l = 252;
+            m = 0;
+          } else if (chlvl === 14) {
+            a = 255;
+            b = 105;
+            c = 180;
+            h = 255;
+            i = 20;
+            j = 147;
+            k = 255;
+            l = 69;
+            m = 147;
+          } else if (chlvl === 15) {
+            a = 0;
+            b = 0;
+            c = 139;
+            h = 0;
+            i = 0;
+            j = 160;
+            k = 0;
+            l = 0;
+            m = 181;
+          } else if (chlvl === 16) {
+            a = 255;
+            b = 255;
+            c = 140;
+            h = 255;
+            i = 255;
+            j = 160;
+            k = 255;
+            l = 255;
+            m = 181;
+          } else if (chlvl === 17) {
+            a = 188;
+            b = 143;
+            c = 143;
+            h = 205;
+            i = 92;
+            j = 92;
+            k = 220;
+            l = 20;
+            m = 60;
+          } else if (chlvl === 18) {
+            a = 0;
+            b = 173;
+            c = 239;
+            h = 0;
+            i = 139;
+            j = 209;
+            k = 0;
+            l = 116;
+            m = 175;
+          } else if (chlvl === 19) {
+            a = 152;
+            b = 251;
+            c = 152;
+            h = 124;
+            i = 252;
+            j = 124;
+            k = 100;
+            l = 220;
+            m = 100;
+          } else if (chlvl === 20) {
+            a = 218;
+            b = 112;
+            c = 214;
+            h = 240;
+            i = 128;
+            j = 128;
+            k = 186;
+            l = 85;
+            m = 211;
+          } else if (chlvl === 21) {
+            a = 255;
+            b = 127;
+            c = 80;
+            h = 255;
+            i = 99;
+            j = 71;
+            k = 255;
+            l = 69;
+            m = 0;
+          } else if (chlvl === 22) {
+            a = 0;
+            b = 255;
+            c = 255;
+            h = 0;
+            i = 235;
+            j = 235;
+            k = 0;
+            l = 205;
+            m = 205;
+          } else if (chlvl === 23) {
+            a = 255;
+            b = 255;
+            c = 140;
+            h = 255;
+            i = 255;
+            j = 150;
+            k = 255;
+            l = 255;
+            m = 160;
+          } else if (chlvl === 24) {
+            a = 224;
+            b = 17;
+            c = 95;
+            h = 221;
+            i = 30;
+            j = 80;
+            k = 215;
+            l = 0;
+            m = 64;
+          } else if (chlvl === 25) {
+            a = 255;
+            b = 153;
+            c = 18;
+            h = 255;
+            i = 135;
+            j = 0;
+            k = 255;
+            l = 100;
+            m = 0;
+          } else if (chlvl === 26) {
+            a = 0;
+            b = 229;
+            c = 170;
+            h = 0;
+            i = 190;
+            j = 138;
+            k = 0;
+            l = 154;
+            m = 112;
+          } else if (chlvl === 27) {
+            a = 175;
+            b = 130;
+            c = 190;
+            h = 185;
+            i = 140;
+            j = 200;
+            k = 195;
+            l = 150;
+            m = 210;
+          } else if (chlvl === 28) {
+            a = 251;
+            b = 206;
+            c = 177;
+            h = 255;
+            i = 160;
+            j = 122;
+            k = 255;
+            l = 127;
+            m = 80;
+          } else if (chlvl === 29) {
+            a = 182;
+            b = 102;
+            c = 210;
+            h = 200;
+            i = 150;
+            j = 215;
+            k = 186;
+            l = 85;
+            m = 211;
+          } else if (chlvl === 30) {
+            a = 102;
+            b = 205;
+            c = 170;
+            h = 70;
+            i = 130;
+            j = 180;
+            k = 0;
+            l = 128;
+            m = 128;
+          } else if (chlvl === 31) {
+            a = 204;
+            b = 255;
+            c = 0;
+            h = 173;
+            i = 255;
+            j = 47;
+            k = 154;
+            l = 205;
+            m = 50;
+          } else if (chlvl === 32) {
+            a = 250;
+            b = 128;
+            c = 114;
+            h = 233;
+            i = 150;
+            j = 122;
+            k = 240;
+            l = 130;
+            m = 140;
+          } else if (chlvl === 33) {
+            a = 0;
+            b = 123;
+            c = 167;
+            h = 0;
+            i = 102;
+            j = 204;
+            k = 0;
+            l = 139;
+            m = 139;
+          } else if (chlvl === 34) {
+            a = 111;
+            b = 45;
+            c = 168;
+            h = 130;
+            i = 102;
+            j = 153;
+            k = 148;
+            l = 96;
+            m = 131;
+          } else if (chlvl === 35) {
+            a = 255;
+            b = 165;
+            c = 0;
+            h = 255;
+            i = 140;
+            j = 0;
+            k = 255;
+            l = 120;
+            m = 0;
+          } else if (chlvl === 36) {
+            a = 176;
+            b = 224;
+            c = 230;
+            h = 173;
+            i = 216;
+            j = 230;
+            k = 173;
+            l = 216;
+            m = 230;
+          } else if (chlvl === 37) {
+            a = 218;
+            b = 112;
+            c = 214;
+            h = 206;
+            i = 144;
+            j = 203;
+            k = 186;
+            l = 85;
+            m = 211;
+          } else if (chlvl === 38) {
+            a = 64;
+            b = 224;
+            c = 208;
+            h = 70;
+            i = 130;
+            j = 180;
+            k = 0;
+            l = 128;
+            m = 128;
+          } else if (chlvl === 39) {
+            a = 255;
+            b = 0;
+            c = 255;
+            h = 245;
+            i = 0;
+            j = 245;
+            k = 238;
+            l = 0;
+            m = 238;
+          } else if (chlvl === 40) {
+            a = 255;
+            b = 255;
+            c = 51;
+            h = 255;
+            i = 245;
+            j = 61;
+            k = 255;
+            l = 235;
+            m = 71;
+          } else if (chlvl === 41) {
+            a = 0;
+            b = 201;
+            c = 87;
+            h = 0;
+            i = 168;
+            j = 107;
+            k = 0;
+            l = 145;
+            m = 100;
+          } else if (chlvl === 42) {
+            a = 251;
+            b = 111;
+            c = 66;
+            h = 255;
+            i = 69;
+            j = 0;
+            k = 255;
+            l = 85;
+            m = 0;
+          } else if (chlvl === 43) {
+            a = 135;
+            b = 206;
+            c = 235;
+            h = 119;
+            i = 158;
+            j = 203;
+            k = 100;
+            l = 149;
+            m = 237;
+          } else if (chlvl === 44) {
+            a = 135;
+            b = 206;
+            c = 235;
+            h = 119;
+            i = 158;
+            j = 203;
+            k = 100;
+            l = 149;
+            m = 237;
+          } else if (chlvl === 45) {
+            a = 255;
+            b = 239;
+            c = 184;
+            h = 255;
+            i = 200;
+            j = 87;
+            k = 255;
+            l = 168;
+            m = 44;
+          } else if (chlvl === 46) {
+            a = 44;
+            b = 117;
+            c = 255;
+            h = 20;
+            i = 90;
+            j = 255;
+            k = 0;
+            l = 0;
+            m = 255;
+          } else if (chlvl === 47) {
+            a = 204;
+            b = 51;
+            c = 153;
+            h = 221;
+            i = 44;
+            j = 153;
+            k = 238;
+            l = 32;
+            m = 77;
+          } else if (chlvl === 48) {
+            a = 50;
+            b = 205;
+            c = 50;
+            h = 34;
+            i = 139;
+            j = 34;
+            k = 0;
+            l = 128;
+            m = 0;
+          } else if (chlvl === 49) {
+            a = 255;
+            b = 102;
+            c = 102;
+            h = 255;
+            i = 51;
+            j = 51;
+            k = 255;
+            l = 26;
+            m = 26;
+          } else {
+            a = 255;
+            b = 165;
+            c = 0;
+            h = 255;
+            i = 140;
+            j = 0;
+            k = 255;
+            l = 120;
+            m = 0;
+          }
+
+          // Create a radial gradient for opacity
+          const radialGradient = ctx.createRadialGradient(
+            centerX,
+            centerY,
+            0,
+            centerX,
+            centerY,
+            innerWidth / 2
+          );
+          radialGradient.addColorStop(0, `rgba(${d}, ${e}, ${f}, ${g})`); // Less opaque in the center
+          radialGradient.addColorStop(1, `rgba(${a}, ${b}, ${c}, 0.75)`);
+          // radialGradient.addColorStop(0, `rgba(${(255 / 100) * (this.n + 2) * 5}, ${155 - (255 / 100) * (this.n +2) * 5}, ${(255 / 100) * (this.n +2)}, 0.44)`); // Less opaque in the center
+          // radialGradient.addColorStop(1, `rgba(${(255 / 100) * (this.n + 2) * 5}, ${155 - (255 / 100) * (this.n +2) * 5}, ${(255 / 100) * (this.n +2)}, 1.0)`); // More opaque towards the edges
+
+          // Set the radial gradient as the fill style for the inner rectangle
+          ctx.fillStyle = radialGradient;
+
+          // ctx.globalAlpha = 0.5; // Change the value to set the desired opacity
+
+          // ctx.fillRect(innerX, innerY, innerWidth, innerHeight);
+
+          ctx.fillRect(innerX, innerY, innerWidth, innerHeight);
+
+          // ctx.globalAlpha = 1;
+
+          ctx.strokeStyle = `rgba(${h}, ${i}, ${j}, 1.0)`;
+          ctx.shadowColor = `rgba(${k}, ${l}, ${m}, 1.0)`;
+          ctx.lineWidth = 0; // Increase the border width if needed
+          ctx.shadowBlur = 3; // Adjust the blur radius for the glow
+          var grd = ctx.createRadialGradient(
+            this.w / 2,
+            this.w / 2,
+            0.3,
+            this.w / 2,
+            this.w / 2,
+            this.w / 30
+          );
+          // grd.addColorStop(0, "#fff1f1");
+          // grd.addColorStop(1, "#ff5b5b");
+          ctx.fillStyle = grd;
+
+          ctx.save();
+          ctx.translate(this.x, this.y - this.w / 2);
+          ctx.beginPath();
+          ctx.ellipse(
+            this.w / 2,
+            this.w / 2,
+            this.w / 18,
+            this.w / 3,
+            Math.PI / 2,
+            0,
+            Math.PI * 2,
+            false
+          );
+          ctx.fill();
+          ctx.restore();
+          ctx.save();
+
+          ctx.translate(this.x, this.y + this.w / 2);
+          ctx.beginPath();
+          ctx.ellipse(
+            this.w / 2,
+            this.w / 2,
+            this.w / 18,
+            this.w / 3,
+            Math.PI / 2,
+            0,
+            Math.PI * 2,
+            false
+          );
+          ctx.fill();
+          ctx.restore();
+
+          ctx.strokeStyle = `rgba(${h}, ${i}, ${j}, 1.0)`;
+
+          ctx.lineWidth = 5; // Increase the border width if needed
+          ctx.shadowBlur = 4;
+
+          ctx.strokeRect(this.x, this.y, this.w, this.h);
+
+          ctx.strokeStyle = "#fff";
+          ctx.lineWidth = 1; // Increase the border width if needed
+          ctx.shadowBlur = 0;
+          ctx.strokeRect(this.x, this.y, this.w, this.h);
+
+          // Add text inside the rectangle
+          ctx.fillStyle = "#fff";
+          ctx.lineWidth = 3;
+          ctx.font = "20px Arial";
+          ctx.textBaseline = "middle";
+          ctx.textAlign = "center";
+          ctx.fillText(this.n, this.x + this.w / 2, this.y + this.h / 2);
+          ctx.textAlign = "start";
+          // ctx.globalAlpha = 0.5; // Change the value to set the desired opacity
+        }
+
+        hit() {
+          this.n--;
+          if (this.n <= 0) {
+            var audioElement = document.getElementById("brickBreakSound");
+            audioElement.play(); // Play the breaking sound
+            // this.broken = true;
+          }
+        }
+
+        get broken() {
+          return this.n <= 0;
+        }
+
+        get hitBottom() {
+          return this.y >= height - uiOffsetY - 80;
+        }
+      }
+
+      class BombBrick extends Brick {
+        constructor(n, x, y) {
+          super(n, x, y);
+          this.color = "#000000"; // Set the color to black
+        }
+
+        display(state) {
+          fillRect(this.x, this.y, this.w, this.h, this.color);
+
+          // Add text inside the rectangle
+          ctx.fillStyle = "rgba(0,0,0,0)"; // Set the text color to white
+          ctx.lineWidth = 3;
+          ctx.font = "20px Arial";
+          ctx.textBaseline = "middle";
+          ctx.textAlign = "center";
+          ctx.fillText("BOMB", this.x + this.w / 2, this.y + this.h / 2);
+          ctx.textAlign = "start";
+        }
+      }
+
+      class BrickParticle {
+        constructor(n, x, y) {
+          const i = n % 5;
+          const j = ~~(n / 4);
+
+          this.w = 10;
+          this.h = 10;
+          this.location = new Vector(x + i * this.w, y + j * this.h);
+          this.acceleration = new Vector(0, 0);
+          this.velocity = new Vector(
+            i > 2
+              ? random(0, 0.5)
+              : i === 2
+              ? random(-0.5, 0.5)
+              : random(-0.5, 0),
+            random(1, 3)
+          );
+          this.lifespan = 255;
+        }
+
+        update() {
+          this.velocity.add(this.acceleration);
+          this.location.add(this.velocity);
+          this.lifespan -= 4;
+        }
+
+        display() {
+          fillRect(
+            this.location.x,
+            this.location.y,
+            5,
+            5,
+            `hsla(293, 70%, 63%, ${this.lifespan / 255})`
+          );
+        }
+
+        run() {
+          this.update();
+          this.display();
+        }
+
+        get isDead() {
+          return this.lifespan < 0;
+        }
+      }
+
+      class BrickParticleSystem {
+        constructor(x, y) {
+          this.origin = new Vector(x, y);
+          this.particles = range(50).map((n) => new BrickParticle(n, x, y));
+        }
+
+        addParticle() {
+          this.particles.push(new BrickParticle(this.origin));
+        }
+
+        run() {
+          this.particles.forEach((particle) => particle.run());
+        }
+
+        get isDead() {
+          return !this.particles.length || this.particles[0].isDead;
+        }
+      }
+
+      class BrickParticleSystems {
+        constructor() {
+          this.particleSystems = [];
+        }
+
+        addParticleSystem(...bricks) {
+          const newPs = bricks.map(({ x, y }) => new BrickParticleSystem(x, y));
+          this.particleSystems.push(...newPs);
+        }
+
+        run() {
+          this.particleSystems = this.particleSystems.filter(
+            (ps) => !ps.isDead
+          );
+          this.particleSystems.forEach((ps) => ps.run());
+        }
+      }
+
+      class BonusBall {
+        constructor(n, x, y) {
+          this.start = n;
+          this.r = 16;
+          this.x = x * 140 + 50;
+          this.y = y * 120 + uiOffsetY;
+          this.hit = false;
+
+          //         this.effectR = 18;
+          //         this.effectD = 0.1;
+        }
+
+        moveDownLittle(state) {
+          this.y = Math.min(
+            this.y + 10,
+            120 * (state.level - this.start + 1) + uiOffsetY + 50
+          );
+        }
+
+        update(state) {
+          if (this.hit) this.y = Math.min(this.y + 50, height - 100);
+          else this.moveDownLittle(state);
+
+          if (this.hit && this.y === height - 100 && state.brickMoving) {
+            if (this.x < state.ballPos.x) {
+              this.x = Math.min(this.x + 30, state.ballPos.x);
+            } else {
+              this.x = Math.max(this.x - 30, state.ballPos.x);
+            }
+          }
+
+          //         this.effectR += this.effectD;
+          //         if (this.effectR > 28) this.effectR = 18;
+        }
+
+        display() {
+          //   const borderWidth = 5; // Set the desired border width
+          // const borderColor = "rgba(216,68,64,0.6)"; // Replace with your desired border color
+          // const padding = 2;
+          // const glowColor = "rgba(242,98,94, 0.7)"; // Replace with your circle color
+          // const glowBlur = 25; // Adjust the blur radius for the glow
+
+          // ctx.save();
+
+          // // Apply the glow effect
+          // ctx.shadowBlur = glowBlur;
+          // ctx.shadowColor = glowColor;
+          // circle(this.x, this.y, this.r - padding, "rgb(194,48,45)",glowColor);
+
+          // // Draw a border around the circle
+          // circle(this.x, this.y, this.r + borderWidth, borderColor);
+          // ctx.restore();
+          const img = document.getElementById("scream");
+
+          // Define the new width and height for the image
+          const newWidth = 150; // Set your desired width
+          const newHeight = 100; // Set your desired height
+          const marginBottom = -50;
+          const marginLeft = -81;
+
+          const yPosWithMargin = this.y + marginBottom;
+          const xPosWithMargin = this.x + marginLeft;
+
+          // Check if the image is loaded
+          if (img.complete) {
+            ctx.drawImage(
+              img,
+              xPosWithMargin,
+              yPosWithMargin,
+              newWidth,
+              newHeight
+            );
+          } else {
+            img.onload = function () {
+              ctx.drawImage(
+                img,
+                xPosWithMargin,
+                yPosWithMargin,
+                newWidth,
+                newHeight
+              );
+            };
+          }
+
+          //         if (!this.hit)
+          //             circle(this.x, this.y, this.effectR);
+        }
+
+        hitWithBall() {
+          this.hit = true;
+        }
+
+        collideWith(ball) {
+          const x = ball.position.x - this.x;
+          const y = ball.position.y - this.y;
+          const r = this.r;
+          const collided = 2 * r >= Math.sqrt(x * x + y * y);
+
+          if (collided) {
+            this.hit = true;
+          }
+          return collided;
+        }
+      }
+
+      class UI {
+        constructor() {}
+
+        display(state) {
+          line(0, uiOffsetY, width, uiOffsetY);
+          line1(0, height - uiOffsetY, width, height - uiOffsetY);
+
+          this.showBallCount(state);
+          this.showScore(state);
+        }
+
+        showScore(state) {
+          ctx.fillStyle = "rgba(0,0,0,0.3)"; // You can use any valid CSS color here
+          ctx.fillRect(0, 0, canvas.width / 4, canvas.height / 14);
+          ctx.fillRect(515, 0, canvas.width / 3.5, canvas.height / 14);
+          ctx.font = "24px 'Pacifico', cursive";
+          ctx.fillStyle = "lightgray"; // You can use any valid CSS color here
+          ctx.fillText(
+            `current score: ${state.level}`,
+            width - 175,
+            uiOffsetY / 2 + 7
+          );
+          ctx.fillText(`max score: ${state.bestLevel}`, 20, uiOffsetY / 2 + 7);
+        }
+
+        showBallCount(state) {
+          if (!state.ballMoving)
+            ctx.fillText(
+              `x${state.ballCount}`,
+              state.ballPos.x - 10,
+              height - 55
+            );
+        }
+
+        // GameOver Styling
+        gameOver() {
+          // Clear the canvas
+          ctx.clearRect(0, 0, width, height);
+
+          // Draw the rectangle centered horizontally and vertically
+          const rectWidth = Math.min(width * 0.4, 250); // Limit width to 600px or 80% of the screen width
+          const rectHeight = Math.min(height * 0.3, 100); // Limit height to 400px or 60% of the screen height
+          const rectX = (width - rectWidth) / 2;
+          const rectY = (height - rectHeight) / 2;
+          fillRect(rectX, rectY, rectWidth, rectHeight, "rgba(0,0,0,0)");
+
+          // Draw the "Loss!" text
+          ctx.font = "20px Arial"; // Adjust font size based on viewport width
+          ctx.fillStyle = "aliceblue"; // Change color to black
+          const textWidth = ctx.measureText("Loss!").width;
+          ctx.fillText("", width / 2 - textWidth / 2, height / 2);
+
+          // Create the refresh button
+          // const image = document.createElement("img");
+          // image.src = "sync.png"; // Replace "sync.png" with the actual path to your image file
+          // image.style.height = "20px";
+
+          // Create refresh button
+          const refreshButton = document.createElement("button");
+          refreshButton.textContent = "Retry";
+          refreshButton.style.backgroundColor = "#052136";
+          refreshButton.style.border = "2px solid #51e9fb";
+          refreshButton.style.boxShadow = "inset 0 0 10px #aaf1fe";
+          refreshButton.style.color = "aliceblue";
+          refreshButton.style.padding = "0.2em 0.5em 0.2em 0.5em";
+          refreshButton.style.display = "flex";
+          refreshButton.style.alignItems = "center";
+          refreshButton.style.height = "70px";
+          refreshButton.style.width = "140px";
+
+          // Add event listener to refresh button
+          refreshButton.onclick = function () {
+            location.reload();
+          };
+
+          // Create container for image and button
+          const container = document.createElement("div");
+          container.style.position = "absolute";
+          container.style.top = "55%";
+          container.style.left = "50%";
+          container.style.transform = "translate(-50%, -50%)";
+          container.style.display = "flex";
+          container.style.alignItems = "center";
+          container.style.justifyContent = "center";
+          container.appendChild(refreshButton);
+
+          const anchorButton = document.createElement("button");
+          anchorButton.textContent = "Menu";
+          anchorButton.style.backgroundColor = "#052136";
+          anchorButton.style.height = "70px";
+          anchorButton.style.width = "140px";
+          anchorButton.style.border = "2px solid #51e9fb";
+          anchorButton.style.boxShadow = "inset 0 0 10px #aaf1fe";
+          anchorButton.style.color = "aliceblue";
+          anchorButton.style.padding = "0.2em 0.5em 0.2em 0.75em";
+          anchorButton.style.display = "flex";
+          anchorButton.style.alignItems = "center";
+
+          // Add event listener to refresh button
+          anchorButton.onclick = function () {
+            window.location.href = "menu.html";
+          };
+
+          // Create container for image and button
+          const anchorContainer = document.createElement("div");
+          anchorContainer.style.position = "absolute";
+          anchorContainer.style.top = "70%";
+          anchorContainer.style.left = "50%";
+          anchorContainer.style.transform = "translate(-50%, -50%)";
+          anchorContainer.style.display = "flex";
+          anchorContainer.style.alignItems = "center";
+          anchorContainer.style.justifyContent = "center";
+          anchorContainer.appendChild(anchorButton);
+
+          // Create a new div to contain both container and anchorContainer
+          const flexContainer = document.createElement("div");
+          flexContainer.style.display = "flex";
+          flexContainer.style.backgroundColor = "#123048";
+          flexContainer.appendChild(container);
+          flexContainer.appendChild(anchorContainer);
+
+          // Append the flex container to the document body
+          document.body.appendChild(flexContainer);
+
+          // Create the anchor button
+          // const anchorButton = document.createElement("a");
+          // anchorButton.textContent = "Home";
+          // anchorButton.href = "./menu.html"; // Replace with the desired URL
+          // anchorButton.style.position = "absolute";
+          // anchorButton.style.top = "60%";
+          // anchorButton.style.left = "50%";
+          // anchorButton.style.transform = "translate(-50%, -50%)";
+          // document.body.appendChild(anchorButton);
+        }
+      }
+
+      class Balls {
+        constructor(state) {
+          this.balls = range(state.ballCount).map(
+            (i) => new Ball(2, state.ballPos.x, state.ballPos.y)
+          );
+          this.onBallStop = (ball) => {
+            if (!state.firstBallStop) {
+              state.ballPos = ball.position.copy();
+              state.firstBallStop = true;
+            }
+
+            ball.position.x = state.ballPos.x;
+          };
+          this.balls.forEach((ball) => ball.setOnStop(this.onBallStop));
+        }
+
+        collideWithBricks(bricks) {
+          bricks.bricks.forEach((brick) => {
+            this.balls.forEach((ball) => {
+              var audioElement = document.getElementById("brickTouchSound");
+              // sd = this.n + 1;
+              const collided = ball.collideWith(brick);
+              if (collided) {
+                audioElement.play();
+                brick.hit();
+              }
+            });
+          });
+        }
+
+        collideWithBonusBall(bonusBalls) {
+          this.balls.forEach((ball) => {
+            bonusBalls.forEach((bonusBall) => {
+              const collided = ball.collideWithBonusBall(bonusBall);
+              if (collided) bonusBall.hitWithBall();
+            });
+          });
+        }
+
+        get allStopped() {
+          return this.balls.every((ball) => ball.velocity.mag() === 0);
+        }
+
+        addBalls(state, n) {
+          const newBalls = range(n).map(
+            (i) => new Ball(2, state.ballPos.x, state.ballPos.y)
+          );
+          newBalls.forEach((ball) => ball.setOnStop(this.onBallStop));
+          this.balls.push(...newBalls);
+        }
+
+        async shoot(mousePos, state) {
+          for (const ball of this.balls) {
+            if (state.ballDowning) return;
+            ball.shoot(mousePos);
+            await delay(Math.max(50 - ~~(state.ballCount / 10), 0));
+          }
+        }
+
+        display() {
+          this.balls.forEach((ball) => {
+            ball.update();
+            ball.checkEdges();
+            ball.display();
+          });
+        }
+
+        down() {
+          this.balls.forEach((ball) => ball.down());
+        }
+      }
+
+      class Bricks {
+        constructor() {
+          this.bricks = [];
+          this.particleSystems = new BrickParticleSystems();
+        }
+
+        addBricks(state, newBrickIndeces) {
+          console.log(newBrickIndeces);
+          const newBricks = newBrickIndeces.map(
+            (i) => new Brick(state.level, i, 0)
+          );
+          this.bricks.push(...newBricks);
+        }
+
+        display(state) {
+          this.bricks.forEach((brick) => {
+            brick.update(state);
+            brick.display(state);
+          });
+
+          this.particleSystems.run();
+        }
+
+        stopSound(sound) {
+          sound.pause();
+          sound.currentTime = 0;
+        }
+
+        break() {
+          const brokenBricks = this.bricks.filter((brick) => brick.broken);
+          this.particleSystems.addParticleSystem(...brokenBricks);
+
+          // Filter out the broken bricks
+          this.bricks = this.bricks.filter((brick) => !brick.broken);
+        }
+
+        shouldSlideDown(state) {
+          return this.bricks[0] && this.bricks[0].shouldMoveDown(state);
+          return audioElement.stop();
+          return true;
+        }
+
+        get hitBottom() {
+          return this.bricks[0] && this.bricks[0].hitBottom;
+        }
+      }
+
+      class BonusBalls {
+        constructor() {
+          this.bonusBalls = [];
+        }
+
+        addBonusBalls(state, newBonusBallIndex) {
+          this.bonusBalls = [
+            ...this.bonusBalls,
+            new BonusBall(state.level, newBonusBallIndex, 0),
+          ];
+        }
+
+        display(state) {
+          this.bonusBalls.forEach((bonusBall) => {
+            bonusBall.update(state);
+            bonusBall.display();
+          });
+        }
+
+        collideWithBall(balls) {
+          this.bonusBalls.forEach((bonusBall) =>
+            balls.balls.forEach((ball) => bonusBall.collideWith(ball))
+          );
+        }
+
+        removeHitBalls() {
+          this.bonusBalls = this.bonusBalls.filter(
+            (b) => !b.hit || b.y > height
+          );
+        }
+
+        get hitBallCount() {
+          return this.bonusBalls.filter((ball) => ball.hit).length;
+        }
+      }
+
+      class LocalStorageManager {
+        constructor() {
+          this.bestScoreKey = "brickBestScore";
+          this.storage = window.localStorage;
+        }
+
+        getBestScore() {
+          return this.storage.getItem(this.bestScoreKey) || 1;
+        }
+
+        setBestScore(score) {
+          this.storage.setItem(this.bestScoreKey, score);
+        }
+
+        setScore(score) {
+          this.setBestScore(Math.max(score, this.getBestScore()));
+        }
+      }
+
+      class GameManager {
+        constructor() {
+          this.state = {
+            ballPos: new Vector(width / 2, height - 100),
+            ballMoving: false,
+            ballCount: 1,
+            ballDowning: false,
+            brickMoving: false,
+            firstBallStop: true,
+            level: 1,
+            over: false,
+          };
+          const canvasWidth = 700;
+          this.balls = new Balls(this.state);
+          this.bricks = new Bricks();
+          this.bonusBalls = new BonusBalls();
+          this.ballLine = new BallLine();
+          // ballLine.display(state);
+          this.ui = new UI();
+          this.scoreStorage = new LocalStorageManager();
+          this.state.bestLevel = this.scoreStorage.getBestScore();
+
+          this.addBallsAndBricks();
+
+          let canvas1 = canvas.addEventListener("mouseup", (e) =>
+            this.shootBalls(e)
+          );
+          let canvas_touch = canvas.addEventListener("touchend", (e) =>
+            this.shootBalls(e)
+          );
+          let slider = document.getElementById("myRange");
+          if (canvas_touch == true && canvas1 == true) {
+            slider.hidden = true;
+          }
+          slider.addEventListener("touchend", (e) => this.shootBalls(e));
+          // slider.addEventListener("drag", (e) => this.shootBalls(e));
+        }
+
+        addBallsAndBricks() {
+          const bonusBallCount = this.bonusBalls.hitBallCount;
+          const newBrickIndeces = shuffle(range(7)).slice(0, randomInt(2, 6));
+
+          const newBonusBallIndex = shuffle(
+            range(6).filter((i) => !newBrickIndeces.includes(i))
+          )[0];
+
+          if (this.state.level % 8 === 0) {
+            const bombBrickIndex = shuffle(
+              range(7).filter(
+                (i) => !newBrickIndeces.includes(i) && i !== newBonusBallIndex
+              )
+            )[0];
+            this.bricks.addBricks(this.state, [bombBrickIndex], true); // Pass true to create a BombBrick
+          }
+
+          this.state.ballCount += bonusBallCount;
+          this.balls.addBalls(this.state, bonusBallCount);
+          this.bricks.addBricks(this.state, newBrickIndeces, false); // Pass false to create a regular Brick
+          this.bonusBalls.addBonusBalls(this.state, newBonusBallIndex);
+        }
+
+        shootBalls(e) {
+          if (
+            this.state.ballMoving ||
+            this.state.brickMoving ||
+            this.state.over
+          )
+            return;
+
+          this.state.ballPos = null;
+          this.state.ballMoving = true;
+          this.state.ballDowning = false;
+          this.state.firstBallStop = false;
+
+          const { x, y } = Mouse.position;
+          this.balls.shoot({ x, y: Math.min(y, 1220) }, this.state);
+        }
+
+        checkCollision() {
+          this.balls.collideWithBricks(this.bricks);
+          this.bonusBalls.collideWithBall(this.balls);
+          this.bricks.break();
+        }
+
+        draw() {
+          let canWidth = 700;
+          clear();
+          // this.ballLine.display(this.state, canWidth);
+          this.ballLine.display(this.state);
+          this.balls.display();
+          this.bricks.display(this.state);
+          this.bonusBalls.display(this.state);
+          this.ui.display(this.state);
+        }
+
+        run() {
+          this.draw();
+          this.checkCollision();
+          const audioElement = document.getElementById("brickBreakSound");
+          if (this.state.ballMoving && this.balls.allStopped) {
+            this.state.ballMoving = false;
+            this.state.brickMoving = true;
+
+            this.state.level += 1;
+            this.scoreStorage.setScore(this.state.level);
+            this.state.bestLevel = this.scoreStorage.getBestScore();
+
+            this.addBallsAndBricks();
+          }
+
+          this.bricks.bricks.forEach((brick) => {
+            brick.y += 0.2;
+          });
+
+          if (this.state.brickMoving) {
+            if (!this.bricks.shouldSlideDown(this.state)) {
+              this.state.brickMoving = false;
+              this.bonusBalls.removeHitBalls();
+            }
+          }
+
+          if (this.bricks.hitBottom) {
+            this.ui.gameOver();
+            this.state.over = true;
+          }
+
+          window.requestAnimationFrame(() => this.run());
+        }
+
+        downBalls() {
+          this.state.ballDowning = true;
+          this.balls.down();
+        }
+      }
+
+      Bricks.prototype.addBricks = function (
+        state,
+        newBrickIndeces,
+        isBomb = false
+      ) {
+        const newBricks = newBrickIndeces.map((i) => {
+          if (isBomb) {
+            return new BombBrick(state.level, i, 0);
+          } else {
+            return new Brick(state.level, i, 0);
+          }
+        });
+        this.bricks.push(...newBricks);
+      };
+
+      Bricks.prototype.break = function () {
+        const brokenBricks = this.bricks.filter((brick) => brick.broken);
+        this.particleSystems.addParticleSystem(...brokenBricks);
+
+        // Filter out the broken bricks
+        this.bricks = this.bricks.filter((brick) => !brick.broken);
+
+        // Check if there is a bomb brick
+        const bombBrick = this.bricks.find(
+          (brick) => brick instanceof BombBrick
+        );
+
+        if (bombBrick) {
+          // Destroy all bricks, including the bomb brick
+          // this.bricks = [];
+          // Add particle systems for all bricks
+          // this.particleSystems.addParticleSystem(...this.bricks);
+        }
+      };
+
+      canvas.addEventListener("mousemove", (e) => {
+        const scale = ctx.scale;
+        const offset = ctx.offset;
+        const mx = e.pageX - canvas.offsetLeft;
+        const my = e.pageY;
+
+        Mouse.position = new Vector(mx, my);
+      });
+
+      function eventPos(e) {
+        if (e.type.indexOf("touch") === -1) {
+          // if its a mouse coord
+          return { x: e.pageX, y: e.pageY, width: 1, height: 1 };
+        }
+
+        // touch event coord
+        if (e.type === "touchend") return { x: 0, y: 0, width: 0, height: 0 };
+        // return { x: e.touches[0].pageX * window.devicePixelRatio, y: e.touches[0].pageY * window.devicePixelRatio - 35, width: 70, height: 70 }
+        const canvasRect = e.target.getBoundingClientRect();
+        const touchX = e.touches[0].clientX - canvasRect.left;
+        const touchY = e.touches[0].clientY - canvasRect.top;
+
+        return {
+          x: touchX * (canvas.width / canvasRect.width),
+          y: touchY * (canvas.height / canvasRect.height),
+          width: 70,
+          height: 70,
+        };
+      }
+      function eventPos1(e) {
+        if (e.type.indexOf("touch") === -1) {
+          // if its a mouse coord
+          return { x: e.pageX, y: e.pageY, width: 1, height: 1 };
+        }
+
+        // touch event coord
+        if (e.type === "touchend") return { x: 0, y: 0, width: 0, height: 0 };
+        // return { x: e.touches[0].pageX * window.devicePixelRatio, y: e.touches[0].pageY * window.devicePixelRatio - 35, width: 70, height: 70 }
+        const canvasRect = e.target.getBoundingClientRect();
+        const touchX = e.touches[0].clientX - canvasRect.left;
+        const touchY = e.touches[0].clientY - canvasRect.top;
+
+        return {
+          x: touchX * (canvas.width / canvasRect.width),
+          y: 800,
+          width: 700,
+          height: 700,
+        };
+      }
+
+      function touchMove(e) {
+        e.preventDefault(); // Prevent default touch event behavior
+        const scale = ctx.scale;
+        const offset = ctx.offset;
+        const pos = eventPos(e);
+        const mx = pos.x;
+        const my = pos.y;
+
+        Mouse.position = new Vector(mx, my);
+      }
+
+      function touchMove1(e) {
+        e.preventDefault(); // Prevent default touch event behavior
+        const scale = ctx.scale;
+        const offset = ctx.offset;
+        const pos = eventPos(e);
+        const mx = pos.x;
+        const my = pos.y - 800;
+        Mouse.position = new Vector(mx, my);
+        // Mouse.position = new Vector(negx, negy);
+      }
+
+      canvas.addEventListener("touchstart", touchMove);
+      canvas.addEventListener("touchmove", touchMove);
+
+      const gameManager = new GameManager();
+
+      gameManager.run();
+      let slider = document.getElementById("myRange");
+      slider.addEventListener("touchend", (e) => this.shootBalls(e));
+      slider.addEventListener("mouseup", (e) => this.shootBalls(e));
+      slider.addEventListener("input", touchMove(e));
+      slider.oninput = function () {
+        addEventListener("touchstart", touchMove);
+        addEventListener("touchmove", touchMove);
+      };
+    </script>
+    <!-- <script src="Mute.js"></script> -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const dialog = document.querySelector("dialog");
+      const showButton = document.querySelector("dialog + button");
+      const closeButton = document.querySelector("dialog button");
+
+      // "Show the dialog" button opens the dialog modally
+      showButton.addEventListener("click", () => {
+        dialog.showModal();
+      });
+
+      // "Close" button closes the dialog
+      closeButton.addEventListener("click", () => {
+        dialog.close();
+      });
+
+      // refreshBtn = document.getElementById("refreshBtn");
+      // refreshBtn.addEventListener("click", () => {
+      //   setTimeout(() => {
+      //     var bgMusic = document.getElementById("bgMusic");
+      //     bgMusic.play();
+      //   }, 1000);
+      // });
+    </script>
+    <script src="gameMusic.js"></script>
+  </body>
+</html>

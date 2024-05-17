@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reflection</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: #111;
+      }
+
+      canvas {
+        image-rendering: pixelated;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+  </body>
+  <script>
+    const canvas = document.querySelector("canvas");
+    const context = canvas.getContext("2d");
+
+    let mouse = {};
+    let dot = {
+      x: 0,
+      y: 0,
+    };
+    let accuracy = 100;
+    let offset = 1;
+    let options = { reflectionCount: 1, auto: true };
+    let sides = {
+      top: { from: {}, to: {} },
+      right: { from: {}, to: {} },
+      bottom: { from: {}, to: {} },
+      left: { from: {}, to: {} },
+      update() {
+        this.top = {
+          from: { x: offset, y: offset },
+          to: { x: canvas.width - offset, y: offset },
+        };
+        this.right = {
+          from: { x: canvas.width - offset, y: offset },
+          to: { x: canvas.width - offset, y: canvas.height - offset },
+        };
+        this.bottom = {
+          from: { x: offset, y: canvas.height - offset },
+          to: { x: canvas.width - offset, y: canvas.height - offset },
+        };
+        this.left = {
+          from: { x: offset, y: offset },
+          to: { x: offset, y: canvas.height - offset },
+        };
+      },
+    };
+    let colors = [];
+
+    function lineIntersect(p0, p1, p2, p3) {
+      let A1 = p1.y - p0.y;
+      let B1 = p0.x - p1.x;
+      let C1 = A1 * p0.x + B1 * p0.y;
+
+      let A2 = p3.y - p2.y;
+      let B2 = p2.x - p3.x;
+      let C2 = A2 * p2.x + B2 * p2.y;
+
+      let denominator = A1 * B2 - A2 * B1;
+
+      return {
+        x: (B2 * C1 - B1 * C2) / denominator,
+        y: (A1 * C2 - A2 * C1) / denominator,
+      };
+    }
+
+    function drawCircle(x, y, color) {
+      context.beginPath();
+      context.arc(x, y, 3, 0, Math.PI * 2);
+      context.closePath();
+      context.fillStyle = color;
+      context.fill();
+    }
+
+    function drawRay(reflectionCount = 1) {
+      let angle = Math.atan2(mouse.y - dot.y, mouse.x - dot.x);
+      let x = Math.cos(angle);
+      let y = Math.sin(angle);
+      let line = {
+        from: { x: dot.x, y: dot.y },
+        to: { x: dot.x + x, y: dot.y + y },
+      };
+      let circle = {};
+
+      for (let i = 0; i < 2; i++) {
+        let position = {};
+        let availableSides = [];
+
+        if (line.from.x > line.to.x) {
+          availableSides.push(sides.left);
+        } else {
+          availableSides.push(sides.right);
+        }
+
+        if (line.from.y > line.to.y) {
+          availableSides.push(sides.top);
+        } else {
+          availableSides.push(sides.bottom);
+        }
+
+        for (let side of availableSides) {
+          let intersect = lineIntersect(line.from, line.to, side.from, side.to);
+
+          if (intersect.x && intersect.y) {
+            if (
+              Math.round(intersect.x) >= offset &&
+              Math.round(intersect.x) <= canvas.width - offset &&
+              Math.round(intersect.y) >= offset &&
+              Math.round(intersect.y) <= canvas.height - offset
+            ) {
+              [position.x, position.y] = [intersect.x, intersect.y];
+            }
+          }
+        }
+
+        context.beginPath();
+        context.moveTo(line.from.x, line.from.y);
+        context.lineTo(position.x, position.y);
+        context.closePath();
+
+        context.strokeStyle = colors[i] || "#000";
+        context.stroke();
+
+        if (i > 0) {
+          drawCircle(circle.x, circle.y, circle.color);
+        }
+
+        circle = { x: position.x, y: position.y, color: colors[i] || "#000" };
+
+        line.from.x = position.x;
+        line.from.y = position.y;
+        if (
+          (position.x >= offset - offset / accuracy &&
+            position.x <= offset + offset / accuracy) ||
+          (position.x >= canvas.width - (offset + offset / accuracy) &&
+            position.x <= canvas.width - (offset - offset / accuracy))
+        ) {
+          line.to.x = position.x - x;
+          line.to.y = position.y + y;
+        }
+
+        if (
+          (position.y >= offset - offset / accuracy &&
+            position.y <= offset + offset / accuracy) ||
+          (position.y >= canvas.height - (offset + offset / accuracy) &&
+            position.y <= canvas.height - (offset - offset / accuracy))
+        ) {
+          line.to.x = position.x + x;
+          line.to.y = position.y - y;
+        }
+
+        angle = Math.atan2(line.to.y - line.from.y, line.to.x - line.from.x);
+        x = Math.cos(angle);
+        y = Math.sin(angle);
+
+        // Top and Bottom
+        // line.to.x = position.x + x;
+        // line.to.y = position.y - y;
+        // Left and Right
+        // line.to.x = position.x - x;
+        // line.to.y = position.y + y;
+      }
+      drawCircle(circle.x, circle.y, circle.color);
+    }
+
+    function fillColors() {
+      colors = [];
+
+      for (let i = 0; i < options.reflectionCount + 1; i++) {
+        let color = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+
+        colors.push(color);
+      }
+    }
+
+    function update(time) {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (mouse.x && mouse.y) {
+        drawRay(options.reflectionCount);
+      }
+      if (options.auto) {
+        [mouse.x, mouse.y] = [
+          dot.x + Math.cos(time / (Math.PI * 1000 * 2)),
+          dot.y + Math.sin(time / (Math.PI * 1000 * 2)),
+        ];
+      }
+
+      drawCircle(dot.x, dot.y, "#fff");
+
+      requestAnimationFrame(update);
+    }
+
+    function resize() {
+      [canvas.width, canvas.height] = [innerWidth, innerHeight];
+
+      sides.update();
+      [dot.x, dot.y] = [canvas.width / 2, canvas.height / 2];
+    }
+
+    function init() {
+      let gui = new dat.GUI();
+      gui.add(options, "auto");
+      let controller = gui.add(options, "reflectionCount", 0, 36, 1);
+      controller.onChange(fillColors);
+
+      resize();
+      fillColors();
+
+      window.addEventListener("mousemove", (event) => {
+        if (!options.auto) {
+          [mouse.x, mouse.y] = [event.clientX, event.clientY];
+        }
+      });
+
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener("load", init);
+    window.addEventListener("resize", resize);
+  </script>
+</html>

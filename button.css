@@ -1,0 +1,55 @@
+/* CSS */
+.button-88 {
+  /* display: flex; */
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #052136;
+  /* background: linear-gradient(360deg, rgb(199, 5, 83) 1%, rgba(252,86,163,1) 100%); */
+  border: none;
+  /* box-shadow: 0 0.7em 1.5em -0.5em #d8045999; */
+  border: 2px solid #51e9fb;
+  box-shadow: inset 0 0 10px #aaf1fe; 
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-88:hover {
+  box-shadow: inset 0 0 10px #aaf1fe; 
+}
+
+.button-88:active {
+  box-shadow: inset 0 0 10px #aaf1fe; 
+}
+
+.m2{
+    margin-bottom: 1rem;
+    width: 200px;
+}
+
+.img{
+    display: flex;
+    flex-direction: column;
+    margin-top: -20.5rem;
+    /* position: absolute; */
+}
+
+.img1{
+    display: flex;
+    flex-direction: column;
+    margin-top: -17rem;
+    position: absolute;
+    bottom: -2rem;
+    /* left: -4rem; */
+}
+
+.w1{
+    width: 200px;
+}
