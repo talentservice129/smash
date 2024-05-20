@@ -28,6 +28,19 @@
         /* background-image: url(bg.png); */
       }
 
+      @media screen and (orientation: landscape) {
+        body {
+          transform: rotate(-90deg);
+          transform-origin: top left;
+          width: 100vh;
+          height: 100vw;
+          overflow-x: hidden;
+          position: absolute;
+          top: 100%;
+          left: 0;
+        }
+      }
+
       @keyframes rotate {
         0% {
           border-image: linear-gradient(
@@ -172,7 +185,7 @@
       .chal {
         display: flex;
         flex-direction: column;
-        margin-top: 1.5rem;
+        margin: auto 0;
       }
 
       p {
@@ -280,7 +293,7 @@
       <source src="230927202-stone-drop-soft-surface-6.wav" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
-    <audio id="bgMusic" autoplay loop>
+    <audio id="bgMusic" loop>
       <source
         src="Dosi & Aisake - Cruising  Lofi  NCS - Copyright Free Music.mp3"
         type="audio/mpeg"
@@ -336,24 +349,28 @@
             soundImage.src = 'volume.png';
             audioElementTouch.muted = false;
             audioElementBreak.muted = false;
+            gameManager.scoreStorage.setSound(true);
           } else {
             audioElementTouch.muted = true;
             audioElementBreak.muted = true;
             soundImage.src = 'no-sound.png';
+            gameManager.scoreStorage.setSound(false);
           }"
           >
             <img src="volume.png" id="soundImage" alt="sound" />
             <p>Sound</p>
           </button>
           <button
-            class="button-88 button buttoncl leb"
+            class="button-88 button buttoncl leb musicBtn"
             role="button"
             onclick="let musicImage = document.getElementById('musicImage');var bgMusic = document.getElementById('bgMusic');if (musicImage.src.endsWith('no-music.png')) {
             musicImage.src = 'music.png';
             bgMusic.play();
+            gameManager.scoreStorage.setMusic(true);
           } else {
             musicImage.src = 'no-music.png';
             bgMusic.pause();
+            gameManager.scoreStorage.setMusic(false);
           } "
           >
             <!-- onclick="musicImage.src = 'volume.png'" -->
@@ -362,7 +379,7 @@
           </button>
           <button class="button-88 button buttoncl leb" role="button">
             <img src="burger-bar.png" alt="sound" />
-            <a class='menuLink' href='/menu'>
+            <a class='menuLink' href='menu.html'>
               <p>Menu</p>
             </a>
           </button>
@@ -648,7 +665,7 @@
           this.velocity = new Vector(0, 0);
           this.acceleration = new Vector(0, 0);
           this.mass = mass;
-          this.r = this.mass * 10;
+          this.r = this.mass * 8;
           this.showDirection = true;
         }
 
@@ -834,19 +851,65 @@
       }
 
       const brickColors = [
-        "#44ffb7",
-        "#29c8f8",
-        "#f8e329",
-        "rgb(250, 183, 38)",
-        "#f85929",
+        [255, 165, 0, 255, 140, 0, 255, 120, 0],
+        [255, 0, 255, 255, 20, 147, 255, 85, 255],
+        [50, 205, 50, 34, 139, 34, 0, 128, 0],
+        [0, 0, 255, 0, 0, 220, 0, 0, 185],
+        [0, 255, 0, 0, 200, 0, 0, 150, 0],
+        [128, 0, 128, 160, 32, 240, 128, 0, 255],
+        [255, 255, 0, 255, 235, 0, 255, 215, 0],
+        [255, 0, 0, 255, 40, 40, 255, 80, 80],
+        [255, 0, 255, 255, 20, 147, 255, 85, 255],
+        [0, 255, 255, 0, 173, 239, 0, 128, 255],
+        [255, 215, 0, 255, 180, 0, 255, 150, 0],
+        [200, 162, 200, 215, 175, 215, 230, 188, 230],
+        [135, 206, 250, 119, 158, 203, 100, 149, 237],
+        [50, 205, 50, 0, 128, 0, 124, 252, 0],
+        [255, 105, 180, 255, 20, 147, 255, 69, 147],
+        [0, 0, 139, 0, 0, 160, 0, 0, 181],
+        [255, 255, 140, 255, 255, 160, 255, 255, 181],
+        [188, 143, 143, 205, 92, 92, 220, 20, 60],
+        [0, 173, 239, 0, 139, 209, 0, 116, 175],
+        [152, 251, 152, 124, 252, 124, 100, 220, 100],
+        [218, 112, 214, 240, 128, 128, 186, 85, 211],
+        [255, 127, 80, 255, 99, 71, 255, 69, 0],
+        [0, 255, 255, 0, 235, 235, 0, 205, 205],
+        [255, 255, 140, 255, 255, 150, 255, 255, 160],
+        [224, 17, 95, 221, 30, 80, 215, 0, 64],
+        [255, 153, 18, 255, 135, 0, 255, 100, 0],
+        [0, 229, 170, 0, 190, 138, 0, 154, 112],
+        [175, 130, 190, 185, 140, 200, 195, 150, 210],
+        [251, 206, 177, 255, 160, 122, 255, 127, 80],
+        [182, 102, 210, 200, 150, 215, 186, 85, 211],
+        [102, 205, 170, 70, 130, 180, 0, 128, 128],
+        [204, 255, 0, 173, 255, 47, 154, 205, 50],
+        [250, 128, 114, 233, 150, 122, 240, 130, 140],
+        [0, 123, 167, 0, 102, 204, 0, 139, 139],
+        [111, 45, 168, 130, 102, 153, 148, 96, 131],
+        [255, 165, 0, 255, 140, 0, 255, 120, 0],
+        [176, 224, 230, 173, 216, 230, 173, 216, 230],
+        [218, 112, 214, 206, 144, 203, 186, 85, 211],
+        [64, 224, 208, 70, 130, 180, 0, 128, 128],
+        [255, 0, 255, 245, 0, 245, 238, 0, 238],
+        [255, 255, 51, 255, 245, 61, 255, 235, 71],
+        [0, 201, 87, 0, 168, 107, 0, 145, 100],
+        [251, 111, 66, 255, 69, 0, 255, 85, 0],
+        [135, 206, 235, 119, 158, 203, 100, 149, 237],
+        [135, 206, 235, 119, 158, 203, 100, 149, 237],
+        [255, 239, 184, 255, 200, 87, 255, 168, 44],
+        [44, 117, 255, 20, 90, 255, 0, 0, 255],
+        [204, 51, 153, 221, 44, 153, 238, 32, 77],
+        [50, 205, 50, 34, 139, 34, 0, 128, 0],
+        [255, 102, 102, 255, 51, 51, 255, 26, 26]
       ];
+
       class Brick {
-        constructor(n, x, y) {
+        constructor(n, x, y, minY = Infinity) {
           this.n = n;
           this.start = n;
 
           this.x = x * 100;
-          this.y = y * 100 + uiOffsetY;
+          this.y = Math.min(y * 100 + uiOffsetY, minY);
           this.w = 100;
           this.h = 100;
         }
@@ -897,8 +960,8 @@
           );
 
           // Add color stops to simulate the glow
-          // gradient.addColorStop(0, 'rgba(255, 223, 0, 0.4)');
-          // gradient.addColorStop(1, 'rgba(255, 223, 0, 0)');
+          gradient.addColorStop(0, 'rgba(255, 223, 0, 0.4)');
+          gradient.addColorStop(1, 'rgba(255, 223, 0, 0)');
 
           // Set the gradient as the fill style
           ctx.fillStyle = gradient;
@@ -953,7 +1016,7 @@
 
           // Fill the inner rectangle with the gradient and the glow effect
           // ctx.fillStyle = this.colorGradient(state.level);
-          // ctx.fillStyle = `rgb(${(255 / 100) * (this.n + 2) * 5}, ${155 - (255 / 100) * (this.n +2) * 5}, ${(255 / 100) * (this.n +2)})`;
+          ctx.fillStyle = `rgb(${(255 / 100) * (this.n + 2) * 5}, ${155 - (255 / 100) * (this.n +2) * 5}, ${(255 / 100) * (this.n +2)})`;
           const min = 1;
           const max = 49;
           const randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -973,507 +1036,7 @@
             l,
             m;
           let chlvl = this.n % 50;
-          if (chlvl === 1) {
-            a = 255;
-            b = 0;
-            c = 255;
-            h = 255;
-            i = 20;
-            j = 147;
-            k = 255;
-            l = 85;
-            m = 255;
-          } else if (chlvl === 2) {
-            a = 50;
-            b = 205;
-            c = 50;
-            h = 34;
-            i = 139;
-            j = 34;
-            k = 0;
-            l = 128;
-            m = 0;
-          } else if (chlvl === 3) {
-            a = 0;
-            b = 0;
-            c = 255;
-            h = 0;
-            i = 0;
-            j = 220;
-            k = 0;
-            l = 0;
-            m = 185;
-          } else if (chlvl === 4) {
-            a = 0;
-            b = 255;
-            c = 0;
-            h = 0;
-            i = 200;
-            j = 0;
-            k = 0;
-            l = 150;
-            m = 0;
-          } else if (chlvl === 5) {
-            a = 128;
-            b = 0;
-            c = 128;
-            h = 160;
-            i = 32;
-            j = 240;
-            k = 128;
-            l = 0;
-            m = 255;
-          } else if (chlvl === 6) {
-            a = 255;
-            b = 255;
-            c = 0;
-            h = 255;
-            i = 235;
-            j = 0;
-            k = 255;
-            l = 215;
-            m = 0;
-          } else if (chlvl === 7) {
-            a = 255;
-            b = 0;
-            c = 0;
-            h = 255;
-            i = 40;
-            j = 40;
-            k = 255;
-            l = 80;
-            m = 80;
-          } else if (chlvl === 8) {
-            a = 255;
-            b = 0;
-            c = 255;
-            h = 255;
-            i = 20;
-            j = 147;
-            k = 255;
-            l = 85;
-            m = 255;
-          } else if (chlvl === 9) {
-            a = 0;
-            b = 255;
-            c = 255;
-            h = 0;
-            i = 173;
-            j = 239;
-            k = 0;
-            l = 128;
-            m = 255;
-          } else if (chlvl === 10) {
-            a = 255;
-            b = 215;
-            c = 0;
-            h = 255;
-            i = 180;
-            j = 0;
-            k = 255;
-            l = 150;
-            m = 0;
-          } else if (chlvl === 11) {
-            a = 200;
-            b = 162;
-            c = 200;
-            h = 215;
-            i = 175;
-            j = 215;
-            k = 230;
-            l = 188;
-            m = 230;
-          } else if (chlvl === 12) {
-            a = 135;
-            b = 206;
-            c = 250;
-            h = 119;
-            i = 158;
-            j = 203;
-            k = 100;
-            l = 149;
-            m = 237;
-          } else if (chlvl === 13) {
-            a = 50;
-            b = 205;
-            c = 50;
-            h = 0;
-            i = 128;
-            j = 0;
-            k = 124;
-            l = 252;
-            m = 0;
-          } else if (chlvl === 14) {
-            a = 255;
-            b = 105;
-            c = 180;
-            h = 255;
-            i = 20;
-            j = 147;
-            k = 255;
-            l = 69;
-            m = 147;
-          } else if (chlvl === 15) {
-            a = 0;
-            b = 0;
-            c = 139;
-            h = 0;
-            i = 0;
-            j = 160;
-            k = 0;
-            l = 0;
-            m = 181;
-          } else if (chlvl === 16) {
-            a = 255;
-            b = 255;
-            c = 140;
-            h = 255;
-            i = 255;
-            j = 160;
-            k = 255;
-            l = 255;
-            m = 181;
-          } else if (chlvl === 17) {
-            a = 188;
-            b = 143;
-            c = 143;
-            h = 205;
-            i = 92;
-            j = 92;
-            k = 220;
-            l = 20;
-            m = 60;
-          } else if (chlvl === 18) {
-            a = 0;
-            b = 173;
-            c = 239;
-            h = 0;
-            i = 139;
-            j = 209;
-            k = 0;
-            l = 116;
-            m = 175;
-          } else if (chlvl === 19) {
-            a = 152;
-            b = 251;
-            c = 152;
-            h = 124;
-            i = 252;
-            j = 124;
-            k = 100;
-            l = 220;
-            m = 100;
-          } else if (chlvl === 20) {
-            a = 218;
-            b = 112;
-            c = 214;
-            h = 240;
-            i = 128;
-            j = 128;
-            k = 186;
-            l = 85;
-            m = 211;
-          } else if (chlvl === 21) {
-            a = 255;
-            b = 127;
-            c = 80;
-            h = 255;
-            i = 99;
-            j = 71;
-            k = 255;
-            l = 69;
-            m = 0;
-          } else if (chlvl === 22) {
-            a = 0;
-            b = 255;
-            c = 255;
-            h = 0;
-            i = 235;
-            j = 235;
-            k = 0;
-            l = 205;
-            m = 205;
-          } else if (chlvl === 23) {
-            a = 255;
-            b = 255;
-            c = 140;
-            h = 255;
-            i = 255;
-            j = 150;
-            k = 255;
-            l = 255;
-            m = 160;
-          } else if (chlvl === 24) {
-            a = 224;
-            b = 17;
-            c = 95;
-            h = 221;
-            i = 30;
-            j = 80;
-            k = 215;
-            l = 0;
-            m = 64;
-          } else if (chlvl === 25) {
-            a = 255;
-            b = 153;
-            c = 18;
-            h = 255;
-            i = 135;
-            j = 0;
-            k = 255;
-            l = 100;
-            m = 0;
-          } else if (chlvl === 26) {
-            a = 0;
-            b = 229;
-            c = 170;
-            h = 0;
-            i = 190;
-            j = 138;
-            k = 0;
-            l = 154;
-            m = 112;
-          } else if (chlvl === 27) {
-            a = 175;
-            b = 130;
-            c = 190;
-            h = 185;
-            i = 140;
-            j = 200;
-            k = 195;
-            l = 150;
-            m = 210;
-          } else if (chlvl === 28) {
-            a = 251;
-            b = 206;
-            c = 177;
-            h = 255;
-            i = 160;
-            j = 122;
-            k = 255;
-            l = 127;
-            m = 80;
-          } else if (chlvl === 29) {
-            a = 182;
-            b = 102;
-            c = 210;
-            h = 200;
-            i = 150;
-            j = 215;
-            k = 186;
-            l = 85;
-            m = 211;
-          } else if (chlvl === 30) {
-            a = 102;
-            b = 205;
-            c = 170;
-            h = 70;
-            i = 130;
-            j = 180;
-            k = 0;
-            l = 128;
-            m = 128;
-          } else if (chlvl === 31) {
-            a = 204;
-            b = 255;
-            c = 0;
-            h = 173;
-            i = 255;
-            j = 47;
-            k = 154;
-            l = 205;
-            m = 50;
-          } else if (chlvl === 32) {
-            a = 250;
-            b = 128;
-            c = 114;
-            h = 233;
-            i = 150;
-            j = 122;
-            k = 240;
-            l = 130;
-            m = 140;
-          } else if (chlvl === 33) {
-            a = 0;
-            b = 123;
-            c = 167;
-            h = 0;
-            i = 102;
-            j = 204;
-            k = 0;
-            l = 139;
-            m = 139;
-          } else if (chlvl === 34) {
-            a = 111;
-            b = 45;
-            c = 168;
-            h = 130;
-            i = 102;
-            j = 153;
-            k = 148;
-            l = 96;
-            m = 131;
-          } else if (chlvl === 35) {
-            a = 255;
-            b = 165;
-            c = 0;
-            h = 255;
-            i = 140;
-            j = 0;
-            k = 255;
-            l = 120;
-            m = 0;
-          } else if (chlvl === 36) {
-            a = 176;
-            b = 224;
-            c = 230;
-            h = 173;
-            i = 216;
-            j = 230;
-            k = 173;
-            l = 216;
-            m = 230;
-          } else if (chlvl === 37) {
-            a = 218;
-            b = 112;
-            c = 214;
-            h = 206;
-            i = 144;
-            j = 203;
-            k = 186;
-            l = 85;
-            m = 211;
-          } else if (chlvl === 38) {
-            a = 64;
-            b = 224;
-            c = 208;
-            h = 70;
-            i = 130;
-            j = 180;
-            k = 0;
-            l = 128;
-            m = 128;
-          } else if (chlvl === 39) {
-            a = 255;
-            b = 0;
-            c = 255;
-            h = 245;
-            i = 0;
-            j = 245;
-            k = 238;
-            l = 0;
-            m = 238;
-          } else if (chlvl === 40) {
-            a = 255;
-            b = 255;
-            c = 51;
-            h = 255;
-            i = 245;
-            j = 61;
-            k = 255;
-            l = 235;
-            m = 71;
-          } else if (chlvl === 41) {
-            a = 0;
-            b = 201;
-            c = 87;
-            h = 0;
-            i = 168;
-            j = 107;
-            k = 0;
-            l = 145;
-            m = 100;
-          } else if (chlvl === 42) {
-            a = 251;
-            b = 111;
-            c = 66;
-            h = 255;
-            i = 69;
-            j = 0;
-            k = 255;
-            l = 85;
-            m = 0;
-          } else if (chlvl === 43) {
-            a = 135;
-            b = 206;
-            c = 235;
-            h = 119;
-            i = 158;
-            j = 203;
-            k = 100;
-            l = 149;
-            m = 237;
-          } else if (chlvl === 44) {
-            a = 135;
-            b = 206;
-            c = 235;
-            h = 119;
-            i = 158;
-            j = 203;
-            k = 100;
-            l = 149;
-            m = 237;
-          } else if (chlvl === 45) {
-            a = 255;
-            b = 239;
-            c = 184;
-            h = 255;
-            i = 200;
-            j = 87;
-            k = 255;
-            l = 168;
-            m = 44;
-          } else if (chlvl === 46) {
-            a = 44;
-            b = 117;
-            c = 255;
-            h = 20;
-            i = 90;
-            j = 255;
-            k = 0;
-            l = 0;
-            m = 255;
-          } else if (chlvl === 47) {
-            a = 204;
-            b = 51;
-            c = 153;
-            h = 221;
-            i = 44;
-            j = 153;
-            k = 238;
-            l = 32;
-            m = 77;
-          } else if (chlvl === 48) {
-            a = 50;
-            b = 205;
-            c = 50;
-            h = 34;
-            i = 139;
-            j = 34;
-            k = 0;
-            l = 128;
-            m = 0;
-          } else if (chlvl === 49) {
-            a = 255;
-            b = 102;
-            c = 102;
-            h = 255;
-            i = 51;
-            j = 51;
-            k = 255;
-            l = 26;
-            m = 26;
-          } else {
-            a = 255;
-            b = 165;
-            c = 0;
-            h = 255;
-            i = 140;
-            j = 0;
-            k = 255;
-            l = 120;
-            m = 0;
-          }
+          [a,b,c,h,i,j,k,m,l] = brickColors[chlvl];
 
           // Create a radial gradient for opacity
           const radialGradient = ctx.createRadialGradient(
@@ -1512,8 +1075,8 @@
             this.w / 2,
             this.w / 30
           );
-          // grd.addColorStop(0, "#fff1f1");
-          // grd.addColorStop(1, "#ff5b5b");
+          grd.addColorStop(0, "#fff1f1");
+          grd.addColorStop(1, "#ff5b5b");
           ctx.fillStyle = grd;
 
           ctx.save();
@@ -1590,8 +1153,8 @@
       }
 
       class BombBrick extends Brick {
-        constructor(n, x, y) {
-          super(n, x, y);
+        constructor(n, x, y, minY) {
+          super(n, x, y, minY);
           this.color = "#000000"; // Set the color to black
         }
 
@@ -1798,7 +1361,8 @@
       }
 
       class UI {
-        constructor() {}
+        constructor() {
+        }
 
         display(state) {
           line(0, uiOffsetY, width, uiOffsetY);
@@ -1810,8 +1374,8 @@
 
         showScore(state) {
           ctx.fillStyle = "rgba(0,0,0,0.3)"; // You can use any valid CSS color here
-          ctx.fillRect(0, 0, canvas.width / 4, canvas.height / 14);
-          ctx.fillRect(515, 0, canvas.width / 3.5, canvas.height / 14);
+          ctx.fillRect(0, 0, canvas.width, canvas.height / 14);
+          // ctx.fillRect(515, 0, canvas.width / 3.5, canvas.height / 14);
           ctx.font = "24px 'Pacifico', cursive";
           ctx.fillStyle = "lightgray"; // You can use any valid CSS color here
           ctx.fillText(
@@ -1863,9 +1427,11 @@
           refreshButton.style.color = "aliceblue";
           refreshButton.style.padding = "0.2em 0.5em 0.2em 0.5em";
           refreshButton.style.display = "flex";
-          refreshButton.style.alignItems = "center";
+          refreshButton.style.justifyContent = "center";
           refreshButton.style.height = "70px";
-          refreshButton.style.width = "140px";
+          refreshButton.style.position = 'static';
+          refreshButton.style.width = "175px";
+          refreshButton.style.textAlign = "center";
 
           // Add event listener to refresh button
           refreshButton.onclick = function () {
@@ -1874,26 +1440,25 @@
 
           // Create container for image and button
           const container = document.createElement("div");
-          container.style.position = "absolute";
-          container.style.top = "55%";
-          container.style.left = "50%";
-          container.style.transform = "translate(-50%, -50%)";
           container.style.display = "flex";
           container.style.alignItems = "center";
           container.style.justifyContent = "center";
+          container.style.margin = '0 10px';
           container.appendChild(refreshButton);
 
           const anchorButton = document.createElement("button");
           anchorButton.textContent = "Menu";
           anchorButton.style.backgroundColor = "#052136";
           anchorButton.style.height = "70px";
-          anchorButton.style.width = "140px";
+          anchorButton.style.width = "175px";
           anchorButton.style.border = "2px solid #51e9fb";
           anchorButton.style.boxShadow = "inset 0 0 10px #aaf1fe";
           anchorButton.style.color = "aliceblue";
           anchorButton.style.padding = "0.2em 0.5em 0.2em 0.75em";
           anchorButton.style.display = "flex";
-          anchorButton.style.alignItems = "center";
+          anchorButton.style.justifyContent = "center";
+          anchorButton.style.position = 'static';
+          anchorButton.style.textAlign = 'center';
 
           // Add event listener to refresh button
           anchorButton.onclick = function () {
@@ -1902,24 +1467,23 @@
 
           // Create container for image and button
           const anchorContainer = document.createElement("div");
-          anchorContainer.style.position = "absolute";
-          anchorContainer.style.top = "70%";
-          anchorContainer.style.left = "50%";
-          anchorContainer.style.transform = "translate(-50%, -50%)";
           anchorContainer.style.display = "flex";
           anchorContainer.style.alignItems = "center";
           anchorContainer.style.justifyContent = "center";
+          anchorContainer.style.margin = '0 10px';
           anchorContainer.appendChild(anchorButton);
 
           // Create a new div to contain both container and anchorContainer
-          const flexContainer = document.createElement("div");
-          flexContainer.style.display = "flex";
-          flexContainer.style.backgroundColor = "#123048";
+          const flexContainer = document.createElement("dialog");
+          flexContainer.style.display = 'flex';
+          flexContainer.style.flexDirection = 'column';
+          flexContainer.style.justifyContent = 'center';
           flexContainer.appendChild(container);
           flexContainer.appendChild(anchorContainer);
 
           // Append the flex container to the document body
           document.body.appendChild(flexContainer);
+          flexContainer.showModal();
 
           // Create the anchor button
           // const anchorButton = document.createElement("a");
@@ -2012,7 +1576,7 @@
         }
 
         addBricks(state, newBrickIndeces) {
-          console.log(newBrickIndeces);
+          // console.log(newBrickIndeces);
           const newBricks = newBrickIndeces.map(
             (i) => new Brick(state.level, i, 0)
           );
@@ -2021,7 +1585,7 @@
 
         display(state) {
           this.bricks.forEach((brick) => {
-            brick.update(state);
+            // brick.update(state);
             brick.display(state);
           });
 
@@ -2091,6 +1655,8 @@
       class LocalStorageManager {
         constructor() {
           this.bestScoreKey = "brickBestScore";
+          this.musicKey = "bricksMusic";
+          this.soundKey = "bricksSound";
           this.storage = window.localStorage;
         }
 
@@ -2104,6 +1670,22 @@
 
         setScore(score) {
           this.setBestScore(Math.max(score, this.getBestScore()));
+        }
+
+        getMusic() {
+          return this.storage.getItem(this.musicKey) || true;
+        }
+
+        setMusic(music) {
+          this.storage.setItem(this.musicKey, music);
+        }
+
+        getSound() {
+          return this.storage.getItem(this.soundKey) || true;
+        }
+
+        setSound(sound) {
+          this.storage.setItem(this.soundKey, sound);
         }
       }
 
@@ -2128,6 +1710,23 @@
           this.ui = new UI();
           this.scoreStorage = new LocalStorageManager();
           this.state.bestLevel = this.scoreStorage.getBestScore();
+
+          // Music, Sound
+          var bgMusic = document.getElementById('bgMusic');
+          if(this.scoreStorage.getMusic() == 'false') {
+            document.querySelector('.musicBtn img').src = 'no-music.png';
+            bgMusic.pause();
+          } else {
+            bgMusic.play();
+          }
+
+          if(this.scoreStorage.getSound() == 'false') {
+            document.querySelector('.soundBtn img').src = 'no-sound.png';
+            var audioElementTouch = document.getElementById('brickTouchSound');
+            var audioElementBreak = document.getElementById('brickBreakSound');
+            audioElementTouch.muted = true;
+            audioElementBreak.muted = true;
+          }
 
           this.addBallsAndBricks();
 
@@ -2203,6 +1802,9 @@
         }
 
         run() {
+          if(this.state.over) {
+            return;
+          }
           this.draw();
           this.checkCollision();
           const audioElement = document.getElementById("brickBreakSound");
@@ -2221,11 +1823,11 @@
             brick.y += 0.2;
           });
 
-          if (this.state.brickMoving) {
-            if (!this.bricks.shouldSlideDown(this.state)) {
+          if (this.state.brickMoving && this.balls.allStopped) {
+            // if (!this.bricks.shouldSlideDown(this.state)) {
               this.state.brickMoving = false;
               this.bonusBalls.removeHitBalls();
-            }
+            // }
           }
 
           if (this.bricks.hitBottom) {
@@ -2247,11 +1849,15 @@
         newBrickIndeces,
         isBomb = false
       ) {
+        let minY;
+        if(this.bricks.length) {
+          minY = this.bricks[this.bricks.length - 1].y - 100;
+        }
         const newBricks = newBrickIndeces.map((i) => {
           if (isBomb) {
-            return new BombBrick(state.level, i, 0);
+            return new BombBrick(state.level, i, 0, minY);
           } else {
-            return new Brick(state.level, i, 0);
+            return new Brick(state.level, i, 0, minY);
           }
         });
         this.bricks.push(...newBricks);

@@ -12,10 +12,26 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link rel="preload" href="music.png" as="image">
+    <link rel="preload" href="no-music.png" as="image">
+    <link rel="preload" href="no-sound.png" as="image">
+    <link rel="preload" href="volume.png" as="image">
     <script src="Mute.js"></script>
     <style>
       body{
         overflow-y: hidden;
+      }
+      @media screen and (orientation: landscape) {
+        body {
+          transform: rotate(-90deg);
+          transform-origin: top left;
+          width: 100vh;
+          height: 100vw;
+          overflow-x: hidden;
+          position: absolute;
+          top: 100%;
+          left: 0;
+        }
       }
       button img{
         height: 25px;
@@ -29,27 +45,37 @@
         display: flex;
         justify-content: space-between;
       }
+      #bestScore {
+        font-size: 20px;
+        font-weight: 500;
+        color: white;
+      }
+
+      #bestScore span {
+        float: right;
+      }
     </style>
   </head>
-  <body>
+  <body style="visibility: hidden;">
     <audio id="menuSound" loop="loop" style="margin-top: 2rem;">
       <source src="smash_bg.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
     
-    <video src="smash_bg.mp4" autoplay loop controls style="display: none;"></video>
+    <video src="smash_bg.mp4" id="bgMusic" loop controls style="display: none;"></video>
     <div id="game">
       <div class="">
         <img src="image-removebg-preview.png" alt="Logo" class="img imageLogo">
         <div class="menu">
+          <p id="bestScore">Max Score: <span>1</span></p>
           <a href="game.html"
           ><button class="button-88 m2" id="playGame" role="button">Play Game</button></a
           >
           <!-- <button class="button-88 w1" role="button" id="mute"
           onclick="changeText()">Mute</button> -->
           <div class="sound">
-            <button class="button-88 button" role="button"><img src="volume.png" alt="music"></button>
-            <button class="button-88 button" role="button"><img src="music.png" alt="sound"></button>
+            <button class="button-88 button soundBtn" role="button" onclick="toggleSound();"><img src="volume.png" alt="music"></button>
+            <button class="button-88 button musicBtn" onclick="toggleMusic();" role="button"><img src="music.png" alt="sound"></button>
           </div>
           <img src="OIG.png" alt="Logo" class="img1 imageLogo1">
           <!-- <button
@@ -69,10 +95,54 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      function playSound() {
-        let mainMusic = document.getElementById("menuSound");
-        mainMusic.play();
+      function init() {
+          let sound =  localStorage.getItem('bricksSound') || true,
+            music = localStorage.getItem('bricksMusic') || true,
+            score = localStorage.getItem('brickBestScore') || 1;
+
+          var bgMusic = document.getElementById('bgMusic');
+          if(music == 'false') {
+            document.querySelector('.musicBtn img').src = 'no-music.png';
+            bgMusic.pause();
+          } else {
+            bgMusic.play();
+          }
+
+          if(sound == 'false') {
+            document.querySelector('.soundBtn img').src = 'no-sound.png';
+          }
+
+          console.log(score);
+          document.querySelector('#bestScore span').innerHTML = score;
+          document.body.style.visibility = 'visible';
       }
+
+      function toggleMusic() {
+        let musicImage = document.querySelector('.musicBtn img');
+        var bgMusic = document.getElementById('bgMusic');
+        if(musicImage.src.endsWith('no-music.png')) {
+            musicImage.src = 'music.png';
+            bgMusic.play();
+            localStorage.setItem('bricksMusic', true);
+        } else {
+          musicImage.src = 'no-music.png';
+          bgMusic.pause();
+          localStorage.setItem('bricksMusic', false);
+        }
+      }
+
+      function toggleSound() {
+        let soundImage = document.querySelector('.soundBtn img');
+        if(soundImage.src.endsWith('no-sound.png')) {
+            soundImage.src = 'volume.png';
+            localStorage.setItem('bricksSound', true);
+        } else {
+          soundImage.src = 'no-sound.png'
+          localStorage.setItem('bricksSound', false);
+        }
+      }
+
+      init();
     </script>
   </body>
 </html>
