@@ -111,7 +111,7 @@
 
       canvas {
         width: 95%;
-        max-height: calc(100% - 131px);
+        max-height: calc(100% - 67px);
         margin: auto;
         display: block;
         position: relative;
@@ -397,7 +397,7 @@
         <button
           class="imgds1"
           role="button"
-          onclick="window.location.reload();"
+          onclick="gameManager.downBalls();"
         >
           <img class="divo1" src="sync.png" id="refreshBtn" alt="pause" />
         </button>
@@ -409,7 +409,7 @@
       <canvas
         id="canvas"
       ></canvas>
-      <div class="control">
+      <div class="control" style="display: none;">
         <input
           type="range"
           title="noopener"
@@ -418,14 +418,13 @@
           value="500"
           id="myRange"
           class="range blue slider"
-          style="display: none;"
         />
         <button
           class="button-30"
           role="button"
           onclick="gameManager.downBalls()"
         >
-          <img src="down-chevron.png" alt="Drop Down" class="imgsr" />
+          <img src="sync.png" alt="Drop Down" class="imgsr" />
         </button>
       </div>
     </div>
@@ -547,7 +546,7 @@
       const canvas = document.getElementById("canvas");
       const ctx = canvas.getContext("2d");
 
-      const width = 500;
+      const width = 700;
       const height = 1080;
 
       const uiOffsetY = 80;
@@ -1780,15 +1779,15 @@
 
         addBallsAndBricks() {
           const bonusBallCount = this.bonusBalls.hitBallCount;
-          const newBrickIndeces = shuffle(range(5)).slice(0, randomInt(2, 4));
+          const newBrickIndeces = shuffle(range(7)).slice(0, randomInt(2, 6));
 
           const newBonusBallIndex = shuffle(
-            range(4).filter((i) => !newBrickIndeces.includes(i))
+            range(6).filter((i) => !newBrickIndeces.includes(i))
           )[0];
 
-          if (this.state.level % 18 === 0) {
+          if (this.state.level % 8 === 0) {
             const bombBrickIndex = shuffle(
-              range(5).filter(
+              range(7).filter(
                 (i) => !newBrickIndeces.includes(i) && i !== newBonusBallIndex
               )
             )[0];
