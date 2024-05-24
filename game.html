@@ -110,6 +110,8 @@
       }
 
       canvas {
+        max-width: 95%;
+        height: calc(100% - 131px);
         margin: 0 auto;
         display: block;
         position: relative;
@@ -153,39 +155,39 @@
 
       @media screen and (max-width: 710px) {
         /* Surface Pro 7, Surface Duo */
-        canvas {
+        /* canvas {
           width: 90% !important;
           height: auto !important;
           top: 5vh !important;
-        }
+        } */
         .control {
           display: flex;
           flex-direction: column;
         }
       }
       @media screen and (max-width: 1800px) {
-        canvas {
-          width: 92% !important;
+        /* canvas {
           height: 65%;
           top: 0.5rem;
-        }
+        } */
       }
 
       .control {
-        margin-top: 4rem;
         width: 100%;
         justify-content: center;
         align-items: center;
       }
 
       .button-30 {
-        margin-top: -20px;
+        position: static;
       }
 
       .chal {
+        width: 100%;
         display: flex;
         flex-direction: column;
         margin: auto 0;
+        height: 100%;
       }
 
       p {
@@ -198,31 +200,23 @@
       div button img {
         height: 25px;
         /* margin-left: -6px; */
-        margin-left: 6px;
       }
       .imgds {
         border-radius: 50%;
-        width: 50px;
-        margin-bottom: 1.5rem;
-        position: absolute;
-        right: 8px;
-        top: -10px;
+        position: static;
         background: transparent;
         border: none;
+        margin: 0 0 15px 0;
       }
       .imgds1 {
         border-radius: 50%;
-        width: 50px;
-        margin-bottom: 1.5rem;
-        position: absolute;
-        right: 50px;
-        top: -10px;
+        position: static;
         background: transparent;
         border: none;
+        margin: 0 0 15px;
       }
       .divo {
         height: 50px;
-        margin-left: -15px;
         background-color: transparent;
       }
 
@@ -231,8 +225,6 @@
         padding: 3px;
         border-radius: 50%;
         border: 2px solid aliceblue;
-        margin-top: 12px;
-        margin-left: -15px;
         background-color: transparent;
       }
       p {
@@ -277,6 +269,7 @@
       }
       .main-btns {
         display: flex;
+        justify-content: flex-end;
       }
       .menuLink {
         text-decoration: none;
@@ -291,6 +284,10 @@
     </audio>
     <audio id="brickBreakSound">
       <source src="230927202-stone-drop-soft-surface-6.wav" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="bombBrickBreakSound">
+      <source src="bomb.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
     <audio id="bgMusic" loop>
@@ -320,6 +317,14 @@
       height="20"
       id="water"
       style="display: none"
+    />
+    <img
+      src="danger.png"
+      alt="Bomb"
+      width="20"
+      height="20"
+      id="bomb"
+      style="display: none;"
     />
     <div
       style="
@@ -387,9 +392,6 @@
         <!-- <p>This modal dialog has a groovy backdrop!</p> -->
       </dialog>
       <div class="main-btns">
-        <button class="imgds" role="button" onclick="dialog.showModal();">
-          <img class="divo" src="ShutDown.png" alt="pause" />
-        </button>
         <button
           class="imgds1"
           role="button"
@@ -397,13 +399,15 @@
         >
           <img class="divo1" src="sync.png" id="refreshBtn" alt="pause" />
         </button>
+        <button class="imgds" role="button" onclick="dialog.showModal();">
+          <img class="divo" src="ShutDown.png" alt="pause" />
+        </button>
       </div>
 
       <canvas
         id="canvas"
-        style="background: url('4\4\Untitled-1-09.png')"
       ></canvas>
-      <div class="control" style="display: none">
+      <div class="control">
         <input
           type="range"
           title="noopener"
@@ -412,6 +416,7 @@
           value="500"
           id="myRange"
           class="range blue slider"
+          style="display: none;"
         />
         <button
           class="button-30"
@@ -751,26 +756,27 @@
           const yPosWithMargin = this.position.y + marginBottom;
           const xPosWithMargin = this.position.x + marginLeft;
 
-          // Check if the image is loaded
-          if (img.complete) {
-            ctx.drawImage(
-              img,
-              xPosWithMargin,
-              yPosWithMargin,
-              newWidth,
-              newHeight
-            );
-          } else {
-            img.onload = function () {
-              ctx.drawImage(
-                img,
-                xPosWithMargin,
-                yPosWithMargin,
-                newWidth,
-                newHeight
-              );
-            };
-          }
+          ctx.save();
+          ctx.fillStyle = '#6f09a5';
+          ctx.beginPath();
+          ctx.ellipse(this.position.x , this.position.y, this.r, this.r, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.fillStyle = '#7d0cc9';
+          ctx.beginPath();
+          ctx.ellipse(this.position.x, this.position.y - this.r * 0.125, this.r * 0.875, this.r * 0.875, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.fillStyle = '#a055d4';
+          ctx.beginPath();
+          ctx.ellipse(this.position.x - this.r * 0.15, this.position.y - this.r * 0.25, this.r * 0.55, this.r * 0.55, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.fillStyle = "#b986dc";
+          ctx.beginPath();
+          ctx.ellipse(this.position.x - this.r * .35, this.position.y - this.r * 0.02, this.r * 0.125, this.r * 0.125, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.ellipse(this.position.x - this.r * .25, this.position.y - this.r * 0.45, this.r * 0.2, this.r * 0.2, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.restore();
         }
 
         collideWith(brick) {
@@ -1067,17 +1073,19 @@
           ctx.shadowColor = `rgba(${k}, ${l}, ${m}, 1.0)`;
           ctx.lineWidth = 0; // Increase the border width if needed
           ctx.shadowBlur = 3; // Adjust the blur radius for the glow
-          var grd = ctx.createRadialGradient(
-            this.w / 2,
-            this.w / 2,
-            0.3,
-            this.w / 2,
-            this.w / 2,
-            this.w / 30
-          );
-          grd.addColorStop(0, "#fff1f1");
-          grd.addColorStop(1, "#ff5b5b");
-          ctx.fillStyle = grd;
+          // var grd = ctx.createRadialGradient(
+          //   this.w / 2,
+          //   this.w / 2,
+          //   0.3,
+          //   this.w / 2,
+          //   this.w / 2,
+          //   this.w / 30
+          // );
+          // grd.addColorStop(0, `rgba(${d}, ${e}, ${f}, ${g})`); // Less opaque in the center
+          // grd.addColorStop(1, `rgba(${a}, ${b}, ${c}, 0.75)`);
+          // grd.addColorStop(0, "#fff1f1");
+          // grd.addColorStop(1, "#ff5b5b");
+          // ctx.fillStyle = grd;
 
           ctx.save();
           ctx.translate(this.x, this.y - this.w / 2);
@@ -1159,16 +1167,38 @@
         }
 
         display(state) {
-          fillRect(this.x, this.y, this.w, this.h, this.color);
+          // fillRect(this.x, this.y, this.w, this.h, this.color);
 
+          const img = document.getElementById("bomb");
           // Add text inside the rectangle
-          ctx.fillStyle = "rgba(0,0,0,0)"; // Set the text color to white
-          ctx.lineWidth = 3;
-          ctx.font = "20px Arial";
-          ctx.textBaseline = "middle";
-          ctx.textAlign = "center";
-          ctx.fillText("BOMB", this.x + this.w / 2, this.y + this.h / 2);
-          ctx.textAlign = "start";
+          if (img.complete) {
+            ctx.drawImage(
+              img,
+              this.x,
+              this.y,
+              this.w,
+              this.h
+            );
+          } else {
+            img.onload = function () {
+              ctx.drawImage(
+                img,
+                this.x,
+                this.y,
+                this.w,
+                this.h
+              );
+            };
+          }
+        }
+
+        hit() {
+          this.n--;
+          if (this.n <= 0) {
+            var audioElement = document.getElementById("bombBrickBreakSound");
+            audioElement.play(); // Play the breaking sound
+            // this.broken = true;
+          }
         }
       }
 
@@ -1318,26 +1348,27 @@
           const yPosWithMargin = this.y + marginBottom;
           const xPosWithMargin = this.x + marginLeft;
 
-          // Check if the image is loaded
-          if (img.complete) {
-            ctx.drawImage(
-              img,
-              xPosWithMargin,
-              yPosWithMargin,
-              newWidth,
-              newHeight
-            );
-          } else {
-            img.onload = function () {
-              ctx.drawImage(
-                img,
-                xPosWithMargin,
-                yPosWithMargin,
-                newWidth,
-                newHeight
-              );
-            };
-          }
+          ctx.save();
+          ctx.fillStyle = '#6f09a5';
+          ctx.beginPath();
+          ctx.ellipse(this.x , this.y, this.r, this.r, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.fillStyle = '#7d0cc9';
+          ctx.beginPath();
+          ctx.ellipse(this.x, this.y - this.r * 0.125, this.r * 0.875, this.r * 0.875, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.fillStyle = '#a055d4';
+          ctx.beginPath();
+          ctx.ellipse(this.x - this.r * 0.15, this.y - this.r * 0.25, this.r * 0.55, this.r * 0.55, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.fillStyle = "#b986dc";
+          ctx.beginPath();
+          ctx.ellipse(this.x - this.r * .35, this.y - this.r * 0.02, this.r * 0.125, this.r * 0.125, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.ellipse(this.x - this.r * .25, this.y - this.r * 0.45, this.r * 0.2, this.r * 0.2, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.restore();
 
           //         if (!this.hit)
           //             circle(this.x, this.y, this.effectR);
@@ -1598,11 +1629,12 @@
         }
 
         break() {
-          const brokenBricks = this.bricks.filter((brick) => brick.broken);
+          const bombBroken = this.bricks.findIndex((brick) => brick instanceof BombBrick && brick.broken) > -1;
+          const brokenBricks = bombBroken ? this.bricks : this.bricks.filter((brick) => brick.broken);
           this.particleSystems.addParticleSystem(...brokenBricks);
 
           // Filter out the broken bricks
-          this.bricks = this.bricks.filter((brick) => !brick.broken);
+          this.bricks = bombBroken ? [] : this.bricks.filter((brick) => !brick.broken);
         }
 
         shouldSlideDown(state) {
@@ -1758,7 +1790,10 @@
                 (i) => !newBrickIndeces.includes(i) && i !== newBonusBallIndex
               )
             )[0];
-            this.bricks.addBricks(this.state, [bombBrickIndex], true); // Pass true to create a BombBrick
+
+            if(bombBrickIndex !== undefined && bombBrickIndex >=0) {
+              this.bricks.addBricks(this.state, [bombBrickIndex], true); // Pass true to create a BombBrick
+            }
           }
 
           this.state.ballCount += bonusBallCount;
@@ -1864,23 +1899,23 @@
       };
 
       Bricks.prototype.break = function () {
-        const brokenBricks = this.bricks.filter((brick) => brick.broken);
+        // Check if there is a bomb brick
+        const bombBrick = this.bricks.findIndex(
+          (brick) => brick instanceof BombBrick && brick.broken
+        ) > -1;
+        const brokenBricks = bombBrick ? this.bricks : this.bricks.filter((brick) => brick.broken);
         this.particleSystems.addParticleSystem(...brokenBricks);
 
         // Filter out the broken bricks
-        this.bricks = this.bricks.filter((brick) => !brick.broken);
+        this.bricks = bombBrick ? [] : this.bricks.filter((brick) => !brick.broken);
 
-        // Check if there is a bomb brick
-        const bombBrick = this.bricks.find(
-          (brick) => brick instanceof BombBrick
-        );
 
-        if (bombBrick) {
+        // if (bombBrick) {
           // Destroy all bricks, including the bomb brick
           // this.bricks = [];
           // Add particle systems for all bricks
           // this.particleSystems.addParticleSystem(...this.bricks);
-        }
+        // }
       };
 
       canvas.addEventListener("mousemove", (e) => {
@@ -1982,9 +2017,9 @@
       const closeButton = document.querySelector("dialog button");
 
       // "Show the dialog" button opens the dialog modally
-      showButton.addEventListener("click", () => {
-        dialog.showModal();
-      });
+      // showButton.addEventListener("click", () => {
+      //   dialog.showModal();
+      // });
 
       // "Close" button closes the dialog
       closeButton.addEventListener("click", () => {
