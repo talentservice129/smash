@@ -547,7 +547,7 @@
       const canvas = document.getElementById("canvas");
       const ctx = canvas.getContext("2d");
 
-      const width = 700;
+      const width = 500;
       const height = 1080;
 
       const uiOffsetY = 80;
@@ -1780,15 +1780,15 @@
 
         addBallsAndBricks() {
           const bonusBallCount = this.bonusBalls.hitBallCount;
-          const newBrickIndeces = shuffle(range(7)).slice(0, randomInt(2, 6));
+          const newBrickIndeces = shuffle(range(5)).slice(0, randomInt(2, 4));
 
           const newBonusBallIndex = shuffle(
-            range(6).filter((i) => !newBrickIndeces.includes(i))
+            range(4).filter((i) => !newBrickIndeces.includes(i))
           )[0];
 
-          if (this.state.level % 8 === 0) {
+          if (this.state.level % 18 === 0) {
             const bombBrickIndex = shuffle(
-              range(7).filter(
+              range(5).filter(
                 (i) => !newBrickIndeces.includes(i) && i !== newBonusBallIndex
               )
             )[0];
