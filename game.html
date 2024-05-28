@@ -281,20 +281,20 @@
 
   <body>
     <audio id="brickTouchSound" onclick="changeText()">
-      <source src="balls_touches_the_block.wav" type="audio/mpeg" />
+      <source src="./balls_touches_the_block.wav" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
     <audio id="brickBreakSound">
-      <source src="230927202-stone-drop-soft-surface-6.wav" type="audio/mpeg" />
+      <source src="./230927202-stone-drop-soft-surface-6.wav" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
     <audio id="bombBrickBreakSound">
-      <source src="bomb.mp3" type="audio/mpeg" />
+      <source src="./bomb.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
     <audio id="bgMusic" loop>
       <source
-        src="Dosi & Aisake - Cruising  Lofi  NCS - Copyright Free Music.mp3"
+        src="./Dosi & Aisake - Cruising  Lofi  NCS - Copyright Free Music.mp3"
         type="audio/mpeg"
       />
       Your browser does not support the audio element.
@@ -302,10 +302,10 @@
 
     <img
       style="position: absolute; width: 100%; height: 100%; z-index: -1"
-      src="4\4\Untitled-1-09.png"
+      src=".\4\4\Untitled-1-09.png"
     />
     <img
-      src="Untitled-1-06-min-min.png"
+      src="./Untitled-1-06-min-min.png"
       alt="Ball"
       width="20"
       height="20"
@@ -313,7 +313,7 @@
       style="display: none"
     />
     <img
-      src="additional_ball.png"
+      src="./additional_ball.png"
       alt="Ball"
       width="20"
       height="20"
@@ -321,7 +321,7 @@
       style="display: none"
     />
     <img
-      src="danger.png"
+      src="./danger.png"
       alt="Bomb"
       width="20"
       height="20"
@@ -330,7 +330,7 @@
     />
     <div
       style="
-        background: url('4\4\Untitled-1-09.png');
+        background: url('.\4\4\Untitled-1-09.png');
         position: absolute;
         width: 100%;
         height: 100%;
@@ -344,7 +344,7 @@
           class="button-88 button buttoncl mt-10"
           onclick="dialog.close()"
         >
-          <img src="play-button-arrowhead.png" alt="close" />
+          <img src="./play-button-arrowhead.png" alt="close" />
           <p>Continue</p>
         </button>
         <div class="sound">
@@ -364,7 +364,7 @@
             gameManager.scoreStorage.setSound(false);
           }"
           >
-            <img src="volume.png" id="soundImage" alt="sound" />
+            <img src="./volume.png" id="soundImage" alt="sound" />
             <p>Sound</p>
           </button>
           <button
@@ -381,11 +381,11 @@
           } "
           >
             <!-- onclick="musicImage.src = 'volume.png'" -->
-            <img src="music.png" id="musicImage" alt="music" />
+            <img src="./music.png" id="musicImage" alt="music" />
             <p>Music</p>
           </button>
           <button class="button-88 button buttoncl leb" role="button">
-            <img src="burger-bar.png" alt="sound" />
+            <img src="./burger-bar.png" alt="sound" />
             <a class='menuLink' href='menu.html'>
               <p>Menu</p>
             </a>
@@ -399,10 +399,10 @@
           role="button"
           onclick="gameManager.downBalls();"
         >
-          <img class="divo1" src="sync.png" id="refreshBtn" alt="pause" />
+          <img class="divo1" src="./sync.png" id="refreshBtn" alt="pause" />
         </button>
         <button class="imgds" role="button" onclick="dialog.showModal();">
-          <img class="divo" src="ShutDown.png" alt="pause" />
+          <img class="divo" src="./ShutDown.png" alt="pause" />
         </button>
       </div>
 
@@ -424,7 +424,7 @@
           role="button"
           onclick="gameManager.downBalls()"
         >
-          <img src="sync.png" alt="Drop Down" class="imgsr" />
+          <img src="./sync.png" alt="Drop Down" class="imgsr" />
         </button>
       </div>
     </div>
