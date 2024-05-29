@@ -352,14 +352,16 @@
             class="button-88 button soundBtn buttoncl"
             role="button"
             onclick="let soundImage = document.getElementById('soundImage');var audioElementTouch = document.getElementById('brickTouchSound');
-            var audioElementBreak = document.getElementById('brickBreakSound');if (soundImage.src.endsWith('no-sound.png')) {
+            var audioElementBreak = document.getElementById('brickBreakSound');var audioElementBombBreak = document.getElementById('bombBrickBreakSound');if (soundImage.src.endsWith('no-sound.png')) {
             soundImage.src = 'volume.png';
             audioElementTouch.muted = false;
             audioElementBreak.muted = false;
+            audioElementBombBreak.muted = false;
             gameManager.scoreStorage.setSound(true);
           } else {
             audioElementTouch.muted = true;
             audioElementBreak.muted = true;
+            audioElementBombBreak.muted = true;
             soundImage.src = 'no-sound.png';
             gameManager.scoreStorage.setSound(false);
           }"
@@ -1757,8 +1759,10 @@
             document.querySelector('.soundBtn img').src = 'no-sound.png';
             var audioElementTouch = document.getElementById('brickTouchSound');
             var audioElementBreak = document.getElementById('brickBreakSound');
+            var audioElementBombBreak = document.getElementById('bombBrickBreakSound');
             audioElementTouch.muted = true;
             audioElementBreak.muted = true;
+            audioElementBombBreak.muted = true;
           }
 
           this.addBallsAndBricks();
